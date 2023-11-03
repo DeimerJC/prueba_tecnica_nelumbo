@@ -7,16 +7,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleResponseDto {
+public class VehicleResponseDto {
 	
     private Long id;
-	
-    private String roleName;
+    
+    private ParkingResponseDto parkingResponseDto;
+    
+    private String plate;
 
-    private String description;
-    
     private String status;
-    
+
+    private Date dateAdmission;
+
     private Date creation;
 
 }

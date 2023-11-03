@@ -8,16 +8,16 @@ public class RoleModel {
     
     private String roleName;
 
-    private String descripction;
+    private String description;
     
     private String status;
     
     private Date creation;
 
-	public RoleModel(Long id, String roleName, String descripction, String status, Date creation) {
+	public RoleModel(Long id, String roleName, String description, String status, Date creation) {
 		this.id = id;
 		this.roleName = roleName;
-		this.descripction = descripction;
+		this.description = description;
 		this.status = status;
 		this.creation = creation;
 	}
@@ -42,12 +42,12 @@ public class RoleModel {
 		this.roleName = roleName;
 	}
 
-	public String getDescripction() {
-		return descripction;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescripction(String descripction) {
-		this.descripction = descripction;
+	public void setDescription(String descripction) {
+		this.description = descripction;
 	}
 
 	public String getStatus() {

@@ -1,5 +1,7 @@
 package com.ptn.prueba_tecnica_nelumbo.application.dto.request;
 
+import java.util.Date;
+
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
 
 import jakarta.validation.constraints.NotBlank;
@@ -9,20 +11,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleRequestDto {
+public class VehicleRequestDto {
 	
 	private Long id;
 	
 	@NotNull(message = Constants.FIELD_NOT_NULL)
-    @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String roleName;
+    private Long parkingId;
 
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String description;
+    private String plate;
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
     private String status;
+
+	@NotNull(message = Constants.FIELD_NOT_NULL)
+    private Date dateAdmission;
 
 }

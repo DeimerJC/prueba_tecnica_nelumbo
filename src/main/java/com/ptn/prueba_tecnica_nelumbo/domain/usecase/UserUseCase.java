@@ -29,15 +29,20 @@ public class UserUseCase implements IUserServicePort {
 
 	@Override
 	public UserModel getUser(Long userId) {
-		return iUserPersistencePort.getUser(userId);
+		UserModel userModel;
+		userModel = iUserPersistencePort.getUser(userId);
+		
+		if(userModel == null) {
+			throw new NoDataFoundException("No se encontró un usuario con el id "+userId);
+		}
+		
+		return userModel;
 	}
 
 	@Override
 	public UserModel updateUser(UserModel userModel) {
 		
-		if(getUser(userModel.getId()) == null) {
-			throw new NoDataFoundException("No se encontró un usuario para actualizar.");
-		}
+		getUser(userModel.getId());
 		
 		return iUserPersistencePort.updateUser(userModel);
 	}
@@ -45,9 +50,7 @@ public class UserUseCase implements IUserServicePort {
 	@Override
 	public void deleteUser(Long userId) {
 		
-		if(getUser(userId) == null) {
-			throw new NoDataFoundException("No se encontró un usuario para eliminar.");
-		}
+		getUser(userId);
 		
 		iUserPersistencePort.deleteUser(userId);
 	}

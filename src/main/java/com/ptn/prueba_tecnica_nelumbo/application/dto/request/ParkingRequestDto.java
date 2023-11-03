@@ -9,20 +9,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleRequestDto {
+public class ParkingRequestDto {
 	
 	private Long id;
 	
 	@NotNull(message = Constants.FIELD_NOT_NULL)
-    @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String roleName;
+    private Long userId;
 
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String description;
+    private String name;
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)
-    @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String status;
+    private Integer vehicleLimit;
+	
+	@NotNull(message = Constants.FIELD_NOT_NULL)
+    private Double valueHour;
 
 }

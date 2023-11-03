@@ -14,7 +14,7 @@ import com.ptn.prueba_tecnica_nelumbo.domain.model.RoleModel;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IRoleResponseMapper {
 	
-    RoleResponseDto toResponse(RoleModel roleRequestDto);
+    RoleResponseDto toResponse(RoleModel roleModel);
 
     List<RoleResponseDto> toResponseList(List<RoleModel> roleModelList);
     
