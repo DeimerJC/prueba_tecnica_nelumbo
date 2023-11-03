@@ -13,7 +13,6 @@ import com.ptn.prueba_tecnica_nelumbo.domain.model.UserModel;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IUserRequestMapper {
 	
-	@Mapping(target = "dependenceModel.id", source = "userRequestDto.dependenceId")
 	@Mapping(target = "roleModel.id", source = "userRequestDto.roleId")
     UserModel toModel(UserRequestDto userRequestDto);
     

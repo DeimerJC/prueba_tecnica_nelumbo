@@ -1,5 +1,7 @@
 package com.ptn.prueba_tecnica_nelumbo.application.dto.response;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +16,7 @@ public class RoleResponseDto {
     private String descripction;
     
     private String status;
+    
+    private Date creation;
 
 }

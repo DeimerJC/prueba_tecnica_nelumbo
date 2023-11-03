@@ -15,11 +15,9 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.UserEntity;
 )
 public interface IUserEntityMapper {
 
-	@Mapping(target = "dependenceEntity.id", source = "userModel.dependenceModel.id")
 	@Mapping(target = "roleEntity.id", source = "userModel.roleModel.id")
     UserEntity toEntity(UserModel userModel);
 	
-	@Mapping(target = "dependenceModel.id", source = "userEntity.dependenceEntity.id")
 	@Mapping(target = "roleModel.id", source = "userEntity.roleEntity.id")
     UserModel toModel(UserEntity userEntity);
 	

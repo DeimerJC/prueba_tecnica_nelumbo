@@ -3,11 +3,11 @@ package com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.jwt;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -19,8 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @Service
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
-//	@Autowired
-//	private UserDetailsService userDetailsService;
+	@Autowired
+	private UserDetailsService userDetailsService;
 
 	@Autowired
 	private JwtUtilService jwtUtilService;
@@ -39,18 +39,18 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 			username = jwtUtilService.extractUsername(jwt);
 		}
 
-//		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//
-//			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-//
-//			if (jwtUtilService.validateToken(jwt, userDetails)) {
-//
-//				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-//						userDetails, null, userDetails.getAuthorities());
-//				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//			}
-//		}
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+
+			if (jwtUtilService.validateToken(jwt, userDetails)) {
+
+				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
+				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+			}
+		}
 		chain.doFilter(request, response);
 	}
 }

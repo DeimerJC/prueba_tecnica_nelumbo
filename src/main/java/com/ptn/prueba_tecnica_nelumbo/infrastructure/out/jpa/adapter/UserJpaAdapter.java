@@ -3,6 +3,8 @@ package com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.adapter;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.ptn.prueba_tecnica_nelumbo.domain.model.UserModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IUserPersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.UserEntity;
@@ -16,7 +18,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     private final IUserRepository iUserRepository;
     private final IUserEntityMapper iUserEntityMapper;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     
     @Override
     public UserModel saveUser(UserModel userModel) {
@@ -25,7 +27,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
     }
     
     public String passwordEncode(String pass) {
-    	return "";//passwordEncoder.encode(pass);
+    	return passwordEncoder.encode(pass);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
 	@Override
 	public UserModel getByUsername(String username) {
-		return iUserEntityMapper.toModel(iUserRepository.findByUsername(username));
+		return iUserEntityMapper.toModel(iUserRepository.findByEmail(username));
 	}
     
 }

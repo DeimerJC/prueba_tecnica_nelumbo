@@ -14,7 +14,6 @@ import com.ptn.prueba_tecnica_nelumbo.domain.model.UserModel;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IUserResponseMapper {
 	
-	@Mapping(target = "dependenceResponseDto.id", source = "userModel.dependenceModel.id")
 	@Mapping(target = "roleResponseDto.id", source = "userModel.roleModel.id")
     UserResponseDto toResponse(UserModel userModel);
 

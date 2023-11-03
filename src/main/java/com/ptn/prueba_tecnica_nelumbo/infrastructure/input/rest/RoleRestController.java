@@ -19,6 +19,7 @@ import com.ptn.prueba_tecnica_nelumbo.application.handler.IRoleHandler;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,7 +27,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/role")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
 public class RoleRestController {
@@ -36,35 +37,40 @@ public class RoleRestController {
     @Operation(summary = "Add a new Role")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Role created"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "409", description = "Role already exists")
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "409", description = "Role already exists", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @PostMapping("/")
-    public ResponseEntity<?> saveRole(@Valid @RequestBody RoleRequestDto RoleRequestDto) {
-    	iRoleHandler.saveRole(RoleRequestDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/role")
+    public ResponseEntity<RoleResponseDto> saveRole(@Valid @RequestBody RoleRequestDto RoleRequestDto) {
+        return new ResponseEntity<RoleResponseDto>(iRoleHandler.saveRole(RoleRequestDto), HttpStatus.CREATED);
     }
     
 
     @Operation(summary = "Get all Roles")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All Roles returned", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "All Roles returned"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @GetMapping("/")
+    @GetMapping("/roles")
     public ResponseEntity<List<RoleResponseDto>> getAllRoles() {
         return ResponseEntity.ok(iRoleHandler.getAllRoles());
     }
     
     
-    @Operation(summary = "Get Roles")
+    @Operation(summary = "Get Role by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role returned", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "Role returned"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @GetMapping("/{idRole}")
+    @GetMapping("/role/{idRole}")
     public ResponseEntity<RoleResponseDto> getRole(@PathVariable Long idRole) {
         return ResponseEntity.ok(iRoleHandler.getRole(idRole));
     }
@@ -72,36 +78,41 @@ public class RoleRestController {
     
     @Operation(summary = "Get Role by name")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role returned", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "Role returned"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @GetMapping("/findByRoleName/{name}")
+    @GetMapping("/role/name/{name}")
     public ResponseEntity<RoleResponseDto> getRoleByName(@PathVariable String name) {
         return ResponseEntity.ok(iRoleHandler.getRoleByName(name));
     }
     
     
-    @Operation(summary = "Update Roles")
+    @Operation(summary = "Update Role")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role updated", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "Role updated"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-	@PutMapping("/")
-	public ResponseEntity<?> updateRole(@Valid @RequestBody RoleRequestDto RoleRequestDto) {
-    	iRoleHandler.updateRole(RoleRequestDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+	@PutMapping("/role")
+	public ResponseEntity<RoleResponseDto> updateRole(@Valid @RequestBody RoleRequestDto RoleRequestDto) {
+        return new ResponseEntity<RoleResponseDto>(iRoleHandler.updateRole(RoleRequestDto), HttpStatus.OK);
 	}
     
     
-    @Operation(summary = "Delete Roles")
+    @Operation(summary = "Delete Role by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Role deleted", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "Role deleted"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-	@DeleteMapping("/{idRole}")
+	@DeleteMapping("/role/{idRole}")
 	public ResponseEntity<?> deleteRole(@PathVariable Long idRole) {
     	iRoleHandler.deleteRole(idRole);
         return new ResponseEntity<>(HttpStatus.OK);

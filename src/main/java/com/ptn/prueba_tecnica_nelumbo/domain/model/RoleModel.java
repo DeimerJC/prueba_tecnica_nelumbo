@@ -1,5 +1,7 @@
 package com.ptn.prueba_tecnica_nelumbo.domain.model;
 
+import java.util.Date;
+
 public class RoleModel {
 	
     private Long id;
@@ -9,15 +11,19 @@ public class RoleModel {
     private String descripction;
     
     private String status;
+    
+    private Date creation;
 
-	public RoleModel(Long id, String roleName, String descripction, String status) {
+	public RoleModel(Long id, String roleName, String descripction, String status, Date creation) {
 		this.id = id;
 		this.roleName = roleName;
 		this.descripction = descripction;
 		this.status = status;
+		this.creation = creation;
 	}
 
 	public RoleModel() {
+		
 	}
 
 	public Long getId() {
@@ -50,6 +56,14 @@ public class RoleModel {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getCreation() {
+		return creation;
+	}
+
+	public void setCreation(Date creation) {
+		this.creation = creation;
 	}
 
 }

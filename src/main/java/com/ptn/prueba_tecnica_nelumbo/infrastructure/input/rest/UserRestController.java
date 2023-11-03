@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.UserRequestDto;
@@ -20,6 +19,7 @@ import com.ptn.prueba_tecnica_nelumbo.application.handler.IUserHandler;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,7 +27,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
 public class UserRestController {
@@ -37,74 +37,84 @@ public class UserRestController {
     @Operation(summary = "Add a new user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User created"),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "409", description = "User already exists")
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "409", description = "User already exists",
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @PostMapping("/")
-    public ResponseEntity<?> saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-    	iUserHandler.saveUser(userRequestDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/user")
+    public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return new ResponseEntity<UserResponseDto>(iUserHandler.saveUser(userRequestDto), HttpStatus.CREATED);
     }
     
 
     @Operation(summary = "Get all users")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All users returned", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "All users returned"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
-    @GetMapping("/")
+    @GetMapping("/users")
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         return ResponseEntity.ok(iUserHandler.getAllUsers());
     }
     
     
-    @Operation(summary = "Get users")
+    @Operation(summary = "Get user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User returned", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "User returned"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
-    @GetMapping("/{idUser}")
+    @GetMapping("/user/{idUser}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable Long idUser) {
         return ResponseEntity.ok(iUserHandler.getUser(idUser));
     }
     
     
-    @Operation(summary = "Update users")
+    @Operation(summary = "Update user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User updated", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "User updated"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
-	@PutMapping("/")
-	public ResponseEntity<?> updateUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-    	iUserHandler.updateUser(userRequestDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+	@PutMapping("/user")
+	public ResponseEntity<UserResponseDto> updateUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return new ResponseEntity<UserResponseDto>(iUserHandler.updateUser(userRequestDto), HttpStatus.OK);
 	}
     
     
-    @Operation(summary = "Delete users")
+    @Operation(summary = "Delete user by id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User deleted", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "User deleted"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
-	@DeleteMapping("/{idUser}")
+	@DeleteMapping("/user/{idUser}")
 	public ResponseEntity<?> deleteUser(@PathVariable Long idUser) {
     	iUserHandler.deleteUser(idUser);
         return new ResponseEntity<>(HttpStatus.OK);
 	}
     
     
-    @Operation(summary = "Get users")
+    @Operation(summary = "Get user by username")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User returned", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad Request"),
-            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+            @ApiResponse(responseCode = "200", description = "User returned"),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
-    @GetMapping("/findByUsername")
-    public ResponseEntity<UserResponseDto> getByUsername(@RequestParam String username) {
+    @GetMapping("/user/username/{username}")
+    public ResponseEntity<UserResponseDto> getByUsername(@PathVariable String username) {
         return ResponseEntity.ok(iUserHandler.getByUsername(username));
     }
 

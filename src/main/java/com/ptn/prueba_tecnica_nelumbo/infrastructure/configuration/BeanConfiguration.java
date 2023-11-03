@@ -2,6 +2,7 @@ package com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IRoleServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IUserServicePort;
@@ -26,11 +27,11 @@ public class BeanConfiguration {
     private final IUserEntityMapper iUserEntityMapper;
     private final IRoleRepository iRoleRepository;
     private final IRoleEntityMapper iRoleEntityMapper;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     
     @Bean
     public IUserPersistencePort iUserPersistencePort() {
-        return new UserJpaAdapter(iUserRepository, iUserEntityMapper);
+        return new UserJpaAdapter(iUserRepository, iUserEntityMapper, passwordEncoder);
     }
 
     @Bean

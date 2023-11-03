@@ -14,9 +14,6 @@ public class UserRequestDto {
 	private Long id;
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)
-    private Long dependenceId;
-    
-	@NotNull(message = Constants.FIELD_NOT_NULL)
     private Long roleId;
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)
@@ -29,10 +26,6 @@ public class UserRequestDto {
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String username;
-    
-	@NotNull(message = Constants.FIELD_NOT_NULL)
-    @NotBlank(message = Constants.FIELD_NOT_BLANK)
     private String identification;
 
 	@NotNull(message = Constants.FIELD_NOT_NULL)
@@ -42,5 +35,9 @@ public class UserRequestDto {
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
     private String pass;
+    
+	@NotNull(message = Constants.FIELD_NOT_NULL)
+    @NotBlank(message = Constants.FIELD_NOT_BLANK)
+    private String status;
 	
 }

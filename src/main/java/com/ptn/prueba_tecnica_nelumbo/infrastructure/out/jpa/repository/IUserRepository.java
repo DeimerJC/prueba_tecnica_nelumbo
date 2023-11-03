@@ -6,6 +6,6 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.UserEntity;
 
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
-	UserEntity findByUsername(String username);
+	UserEntity findByEmail(String email);
 
 }

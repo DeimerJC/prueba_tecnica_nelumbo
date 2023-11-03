@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -47,13 +47,13 @@ public class JwtUtilService {
 		return extractExpiration(token).before(new Date());
 	}
 
-//	public String generateToken(UserDetails userDetails) {
-//		Map<String, Object> claims = new HashMap<>();
-//		// Agregando informacion adicional como "claim"
-//		var rol = userDetails.getAuthorities().stream().collect(Collectors.toList()).get(0);
-//		claims.put("rol", rol);
-//		return createToken(claims, userDetails.getUsername());
-//	}
+	public String generateToken(UserDetails userDetails) {
+		Map<String, Object> claims = new HashMap<>();
+		// Agregando informacion adicional como "claim"
+		var rol = userDetails.getAuthorities().stream().collect(Collectors.toList()).get(0);
+		claims.put("rol", rol);
+		return createToken(claims, userDetails.getUsername());
+	}
 
 	private String createToken(Map<String, Object> claims, String subject) {
 
@@ -62,9 +62,9 @@ public class JwtUtilService {
 				.signWith(SignatureAlgorithm.HS256, secret).compact();
 	}
 
-//	public boolean validateToken(String token, UserDetails userDetails) {
-//		final String username = extractUsername(token);
-//		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-//	}
+	public boolean validateToken(String token, UserDetails userDetails) {
+		final String username = extractUsername(token);
+		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+	}
 
 }

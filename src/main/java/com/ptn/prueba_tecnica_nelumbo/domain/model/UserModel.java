@@ -12,23 +12,22 @@ public class UserModel {
     
     private String lastName;
     
-    private String username;
-    
     private String identification;
-
-    private Date creation;
 
     private String email;
     
     private String pass;
+    
+    private String status;
+
+    private Date creation;
 
 	public UserModel(Long id, RoleModel roleModel, String name, String lastName,
-			String username, String identification, Date creation, String email, String pass) {
+			String identification, Date creation, String email, String pass) {
 		this.id = id;
 		this.roleModel = roleModel;
 		this.name = name;
 		this.lastName = lastName;
-		this.username = username;
 		this.identification = identification;
 		this.creation = creation;
 		this.email = email;
@@ -70,14 +69,6 @@ public class UserModel {
 		this.lastName = lastName;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getIdentification() {
 		return identification;
 	}
@@ -100,6 +91,14 @@ public class UserModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getPass() {
