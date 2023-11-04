@@ -2,6 +2,7 @@ package com.ptn.prueba_tecnica_nelumbo.domain.api;
 
 import java.util.List;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.VehicleModel;
 
 public interface IVehicleServicePort {
@@ -16,6 +17,8 @@ public interface IVehicleServicePort {
 
     void deleteVehicle(Long vehicleId);
 
-	VehicleModel registerIncome(VehicleModel vehicleModel); 
+	VehicleModel registerIncome(VehicleModel vehicleModel);
+
+	MessageResponseDto checkOut(VehicleModel vehicleModel);  
     
 }

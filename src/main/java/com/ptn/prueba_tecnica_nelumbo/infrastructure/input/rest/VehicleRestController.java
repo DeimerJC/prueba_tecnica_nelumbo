@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IVehicleHandler;
 
@@ -41,4 +42,19 @@ public class VehicleRestController {
         return new ResponseEntity<VehicleResponseDto>(iVehicleHandler.registerIncome(vehicleRequestDto), HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "check out of the parking lot.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "registered output", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Message"))),
+            @ApiResponse(responseCode = "400", description = "Bad Request", 
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+            @ApiResponse(responseCode = "404", description = "No data found",
+            		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
+    })
+    @PostMapping("/vehicle/parking-exit")
+    public ResponseEntity<MessageResponseDto> checkOut(@Valid @RequestBody VehicleRequestDto vehicleRequestDto) {
+        return new ResponseEntity<MessageResponseDto>(iVehicleHandler.checkOut(vehicleRequestDto), HttpStatus.OK);
+    }
+    
 }

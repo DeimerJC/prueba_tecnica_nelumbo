@@ -24,8 +24,10 @@ public class OpenApiConfiguration {
     public OpenAPI customOpenApi(@Value("${appdescription}") String appDescription,
                                  @Value("${appversion}") String appVersion){
 
-        Schema<?> mapSchema = new Schema<Map<String, String>>()
+        Schema<?> mapErrorSchema = new Schema<Map<String, String>>()
                 .addProperty("message", new StringSchema().example("string"));
+        Schema<?> mapMessageSchema = new Schema<Map<String, String>>()
+        		.addProperty("message", new StringSchema().example("string"));
         
         return new OpenAPI()
             .components(new Components())
@@ -36,7 +38,8 @@ public class OpenApiConfiguration {
                 .termsOfService("http://swagger.io/terms/")
                 .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .components(new Components()
-                .addSchemas("Error", mapSchema)
+                .addSchemas("Error", mapErrorSchema)
+                .addSchemas("Message", mapMessageSchema)
             );
     }
 }

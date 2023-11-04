@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IVehicleHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IVehicleRequestMapper;
@@ -66,6 +67,14 @@ public class VehicleHandler implements IVehicleHandler {
 						iVehicleRequestMapper.toModel(vehicleRequestDto)
 				)
 			);
+	}
+
+	@Transactional
+	@Override
+	public MessageResponseDto checkOut(VehicleRequestDto vehicleRequestDto) {
+		return iVehicleServicePort.checkOut(
+						iVehicleRequestMapper.toModel(vehicleRequestDto)
+				);
 	}
 	
 }

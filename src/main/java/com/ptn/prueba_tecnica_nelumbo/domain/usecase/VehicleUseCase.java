@@ -3,9 +3,13 @@ package com.ptn.prueba_tecnica_nelumbo.domain.usecase;
 import java.util.Date;
 import java.util.List;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingHistoryServicePort;
+import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IVehicleServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.BadRequestException;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.NoDataFoundException;
+import com.ptn.prueba_tecnica_nelumbo.domain.model.ParkingHistoryModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.VehicleModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IVehiclePersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
@@ -13,9 +17,15 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
 public class VehicleUseCase implements IVehicleServicePort {
 
     private final IVehiclePersistencePort iVehiclePersistencePort;
+    private final IParkingServicePort iParkingServicePort;
+    private final IParkingHistoryServicePort iParkingHistoryServicePort;
 
-    public VehicleUseCase(IVehiclePersistencePort iVehiclePersistencePort) {
+    public VehicleUseCase(IVehiclePersistencePort iVehiclePersistencePort,
+    		IParkingServicePort iParkingServicePort,
+    		IParkingHistoryServicePort iParkingHistoryServicePort) {
         this.iVehiclePersistencePort = iVehiclePersistencePort;
+        this.iParkingServicePort = iParkingServicePort;
+        this.iParkingHistoryServicePort = iParkingHistoryServicePort;
     }
 
 	@Override
@@ -53,6 +63,8 @@ public class VehicleUseCase implements IVehicleServicePort {
 	@Override
 	public VehicleModel registerIncome(VehicleModel vehicleModel) {
 		
+		iParkingServicePort.getParking(vehicleModel.getParkingModel().getId());			
+		
 		VehicleModel vehicleModeldb;
 		vehicleModeldb = iVehiclePersistencePort.getByPlate(vehicleModel.getPlate());
 		
@@ -72,6 +84,35 @@ public class VehicleUseCase implements IVehicleServicePort {
 		}
 		
 		return iVehiclePersistencePort.registerIncome(vehicleModel);
+	}
+
+	@Override
+	public MessageResponseDto checkOut(VehicleModel vehicleModel) {
+		
+		iParkingServicePort.getParking(vehicleModel.getParkingModel().getId());			
+		
+		VehicleModel vehicleModeldb;
+		vehicleModeldb = iVehiclePersistencePort.getByPlate(vehicleModel.getPlate());
+		
+		if(vehicleModeldb != null) {
+			if(vehicleModeldb.getStatus().equals(Constants.STATUS_DISABLE)) {
+				throw new BadRequestException("No se puede Registrar Salida, no existe la placa en el parqueadero");
+			}
+		} else {
+			throw new BadRequestException("No se puede Registrar Salida, no existe la placa en el parqueadero");
+		}
+		
+		vehicleModeldb.setStatus(Constants.STATUS_DISABLE);
+		
+		updateVehicle(vehicleModeldb);
+		
+		//Se registra en la tabla historial de parqueaderos
+		ParkingHistoryModel parkingHistoryModel;
+		parkingHistoryModel = new ParkingHistoryModel(null, vehicleModeldb, vehicleModeldb.getParkingModel(), new Date(), null);
+		
+		iParkingHistoryServicePort.saveParkingHistory(parkingHistoryModel);
+		
+		return new MessageResponseDto("Salida registrada");
 	}
 
 }

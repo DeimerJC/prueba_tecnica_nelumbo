@@ -80,7 +80,7 @@ public class BeanConfiguration {
     
     @Bean
     public IVehicleServicePort iVehicleServicePort() {
-    	return new VehicleUseCase(iVehiclePersistencePort());
+    	return new VehicleUseCase(iVehiclePersistencePort(), iParkingServicePort(), iParkingHistoryServicePort());
     }
     
     @Bean

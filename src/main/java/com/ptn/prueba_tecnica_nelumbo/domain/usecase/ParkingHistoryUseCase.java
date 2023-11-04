@@ -1,5 +1,6 @@
 package com.ptn.prueba_tecnica_nelumbo.domain.usecase;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingHistoryServicePort;
@@ -16,6 +17,7 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 
 	@Override
 	public ParkingHistoryModel saveParkingHistory(ParkingHistoryModel parkingHistoryModel) {
+		parkingHistoryModel.setCreation(new Date()); 
 		return iParkingHistoryPersistencePort.saveParkingHistory(parkingHistoryModel);
 	}
 
