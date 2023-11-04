@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseExtDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IVehicleHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IVehicleRequestMapper;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IVehicleResponseMapper;
@@ -34,8 +35,8 @@ public class VehicleHandler implements IVehicleHandler {
     }
 
 	@Override
-	public List<VehicleResponseDto> getAllVehicles() {
-		return iVehicleResponseMapper.toResponseList( iVehicleServicePort.getAllVehicles() );
+	public List<VehicleResponseExtDto> getAllVehicles() {
+		return iVehicleResponseMapper.toResponseListExt( iVehicleServicePort.getAllVehicles() );
     }
 
 	@Override

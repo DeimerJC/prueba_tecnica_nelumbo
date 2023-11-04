@@ -35,7 +35,13 @@ public class VehicleUseCase implements IVehicleServicePort {
 
 	@Override
 	public List<VehicleModel> getAllVehicles() {
-		return iVehiclePersistencePort.getAllVehicles();
+		List<VehicleModel> vehicleModelList = iVehiclePersistencePort.getAllVehicles();
+		
+		if(vehicleModelList.isEmpty()) {
+			throw new NoDataFoundException("No se encontró vehiculos");
+		}
+		
+		return vehicleModelList;
 	}
 
 	@Override

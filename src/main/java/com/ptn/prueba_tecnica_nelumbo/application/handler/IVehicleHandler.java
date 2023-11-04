@@ -5,12 +5,13 @@ import java.util.List;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseExtDto;
 
 public interface IVehicleHandler {
 	
 	VehicleResponseDto saveVehicle(VehicleRequestDto vehicleRequestDto);
 
-    List<VehicleResponseDto> getAllVehicles();
+    List<VehicleResponseExtDto> getAllVehicles();
 
     VehicleResponseDto getVehicle(Long vehicleId);
 

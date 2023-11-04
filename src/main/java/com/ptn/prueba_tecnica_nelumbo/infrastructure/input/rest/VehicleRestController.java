@@ -1,7 +1,10 @@
 package com.ptn.prueba_tecnica_nelumbo.infrastructure.input.rest;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseExtDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IVehicleHandler;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,6 +59,18 @@ public class VehicleRestController {
     @PostMapping("/vehicle/parking-exit")
     public ResponseEntity<MessageResponseDto> checkOut(@Valid @RequestBody VehicleRequestDto vehicleRequestDto) {
         return new ResponseEntity<MessageResponseDto>(iVehicleHandler.checkOut(vehicleRequestDto), HttpStatus.OK);
+    }
+    
+
+    @Operation(summary = "Get all parked vehicles.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All vehicles returned"),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/vehicles")
+    public ResponseEntity<List<VehicleResponseExtDto>> getAllVehicles() {
+        return ResponseEntity.ok(iVehicleHandler.getAllVehicles());
     }
     
 }

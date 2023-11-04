@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ptn.prueba_tecnica_nelumbo.domain.model.VehicleModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IVehiclePersistencePort;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.VehicleEntity;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.mapper.IVehicleEntityMapper;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.repository.IVehicleRepository;
@@ -24,7 +25,7 @@ public class VehicleJpaAdapter implements IVehiclePersistencePort {
 	
 	@Override
 	public List<VehicleModel> getAllVehicles() {
-		List<VehicleEntity> entityList = iVehicleRepository.findAll();
+		List<VehicleEntity> entityList = iVehicleRepository.findAllByStatus(Constants.STATUS_ENABLE);
         if (entityList.isEmpty()) {
             Collections.emptyList();
         }
