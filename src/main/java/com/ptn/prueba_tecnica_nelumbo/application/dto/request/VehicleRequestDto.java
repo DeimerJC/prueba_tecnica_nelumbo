@@ -1,7 +1,5 @@
 package com.ptn.prueba_tecnica_nelumbo.application.dto.request;
 
-import java.util.Date;
-
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
 
 import jakarta.validation.constraints.NotBlank;
@@ -21,12 +19,5 @@ public class VehicleRequestDto {
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
     private String plate;
-    
-	@NotNull(message = Constants.FIELD_NOT_NULL)
-    @NotBlank(message = Constants.FIELD_NOT_BLANK)
-    private String status;
-
-	@NotNull(message = Constants.FIELD_NOT_NULL)
-    private Date dateAdmission;
 
 }

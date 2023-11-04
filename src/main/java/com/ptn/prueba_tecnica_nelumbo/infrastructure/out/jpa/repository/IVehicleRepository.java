@@ -6,4 +6,6 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.VehicleEntit
 
 public interface IVehicleRepository extends JpaRepository<VehicleEntity, Long> {
 
+	VehicleEntity findByPlate(String plate);
+
 }

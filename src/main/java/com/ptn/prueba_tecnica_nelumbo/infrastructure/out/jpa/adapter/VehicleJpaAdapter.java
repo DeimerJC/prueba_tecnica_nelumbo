@@ -47,4 +47,14 @@ public class VehicleJpaAdapter implements IVehiclePersistencePort {
 		iVehicleRepository.deleteById(vehicleId);
 	}
 
+	@Override
+	public VehicleModel registerIncome(VehicleModel vehicleModel) {
+		return iVehicleEntityMapper.toModel(iVehicleRepository.save(iVehicleEntityMapper.toEntity(vehicleModel)));
+	}
+
+	@Override
+	public VehicleModel getByPlate(String plate) {
+		return iVehicleEntityMapper.toModel(iVehicleRepository.findByPlate(plate));
+	}
+
 }

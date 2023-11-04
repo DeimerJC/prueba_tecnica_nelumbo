@@ -15,5 +15,7 @@ public interface IVehicleServicePort {
     VehicleModel updateVehicle(VehicleModel vehicleModel);
 
     void deleteVehicle(Long vehicleId);
+
+	VehicleModel registerIncome(VehicleModel vehicleModel); 
     
 }

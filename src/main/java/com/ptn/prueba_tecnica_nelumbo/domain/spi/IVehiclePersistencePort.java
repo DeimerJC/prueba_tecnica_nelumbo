@@ -15,5 +15,9 @@ public interface IVehiclePersistencePort {
     VehicleModel updateVehicle(VehicleModel vehicleModel);
 
     void deleteVehicle(Long vehicleId);
+
+    VehicleModel getByPlate(String plate); 
+
+	VehicleModel registerIncome(VehicleModel vehicleModel);
     
 }

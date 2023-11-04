@@ -57,5 +57,15 @@ public class VehicleHandler implements IVehicleHandler {
 	public void deleteVehicle(Long vehicleId) {
 		iVehicleServicePort.deleteVehicle(vehicleId);
 	}
+
+	@Transactional
+	@Override
+	public VehicleResponseDto registerIncome(VehicleRequestDto vehicleRequestDto) {
+		return iVehicleResponseMapper.toResponse(
+				iVehicleServicePort.registerIncome(
+						iVehicleRequestMapper.toModel(vehicleRequestDto)
+				)
+			);
+	}
 	
 }

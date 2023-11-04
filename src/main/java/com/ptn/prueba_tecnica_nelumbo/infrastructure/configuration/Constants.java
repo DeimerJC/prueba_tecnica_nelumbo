@@ -6,8 +6,12 @@ public class Constants {
 
     public static final String FIELD_NOT_BLANK = "The field cannot be empty.";
 
-    public static final String ROLE_OWNER = "Owner";
+    public static final String STATUS_ENABLE = "ENABLE";
 
-    public static final String ROLE_ADMIN = "Administrator";
+    public static final String STATUS_DISABLE = "DISABLE";
+
+    public static final String ROLE_SOCIO = "SOCIO";
+
+    public static final String ROLE_ADMIN = "ADMIN";
 
 }

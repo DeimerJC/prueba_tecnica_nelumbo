@@ -17,4 +17,6 @@ public interface IVehicleHandler {
 
     void deleteVehicle(Long vehicleId);
 
+	VehicleResponseDto registerIncome(VehicleRequestDto vehicleRequestDto);
+
 }
