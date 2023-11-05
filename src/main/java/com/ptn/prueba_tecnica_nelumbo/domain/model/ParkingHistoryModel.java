@@ -10,15 +10,18 @@ public class ParkingHistoryModel {
     
     private ParkingModel parkingModel;
     
+    private Date dateAdmission;
+    
     private Date departureDate;
 
     private Date creation;
 
-	public ParkingHistoryModel(Long id, VehicleModel vehicleModel, ParkingModel parkingModel, Date departureDate,
-			Date creation) {
+	public ParkingHistoryModel(Long id, VehicleModel vehicleModel, ParkingModel parkingModel, Date dateAdmission,
+			Date departureDate, Date creation) {
 		this.id = id;
 		this.vehicleModel = vehicleModel;
 		this.parkingModel = parkingModel;
+		this.dateAdmission = dateAdmission;
 		this.departureDate = departureDate;
 		this.creation = creation;
 	}
@@ -48,6 +51,14 @@ public class ParkingHistoryModel {
 
 	public void setParkingModel(ParkingModel parkingModel) {
 		this.parkingModel = parkingModel;
+	}
+
+	public Date getDateAdmission() {
+		return dateAdmission;
+	}
+
+	public void setDateAdmission(Date dateAdmission) {
+		this.dateAdmission = dateAdmission;
 	}
 
 	public Date getDepartureDate() {

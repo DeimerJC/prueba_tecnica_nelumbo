@@ -77,5 +77,19 @@ public class VehicleHandler implements IVehicleHandler {
 						iVehicleRequestMapper.toModel(vehicleRequestDto)
 				);
 	}
+
+	@Override
+	public List<VehicleResponseExtDto> vehiclesByCoincidence(String plateSearch) {
+		return iVehicleResponseMapper.toResponseListExt(
+				iVehicleServicePort.vehiclesByCoincidence(plateSearch)
+			);
+	}
+
+	@Override
+	public List<VehicleResponseExtDto> vehiclesParkedFirstTime() {
+		return iVehicleResponseMapper.toResponseListExt(
+				iVehicleServicePort.vehiclesParkedFirstTime()
+			);
+	}
 	
 }

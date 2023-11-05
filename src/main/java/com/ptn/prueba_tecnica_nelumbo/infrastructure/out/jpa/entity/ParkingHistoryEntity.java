@@ -35,6 +35,9 @@ public class ParkingHistoryEntity {
     @ManyToOne
     @JoinColumn(name = "parking_id")
     private ParkingEntity parkingEntity;
+
+    @Column(name = "date_admission")
+    private Date dateAdmission;
     
     @Column(name = "departure_date")
     private Date departureDate;

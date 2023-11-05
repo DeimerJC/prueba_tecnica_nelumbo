@@ -19,6 +19,10 @@ public interface IVehicleServicePort {
 
 	VehicleModel registerIncome(VehicleModel vehicleModel);
 
-	MessageResponseDto checkOut(VehicleModel vehicleModel);  
+	MessageResponseDto checkOut(VehicleModel vehicleModel);
+
+	List<VehicleModel> vehiclesByCoincidence(String plateSearch);
+
+	List<VehicleModel> vehiclesParkedFirstTime();   
     
 }

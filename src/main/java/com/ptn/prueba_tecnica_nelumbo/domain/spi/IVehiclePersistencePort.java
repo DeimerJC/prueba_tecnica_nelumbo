@@ -19,5 +19,9 @@ public interface IVehiclePersistencePort {
     VehicleModel getByPlate(String plate); 
 
 	VehicleModel registerIncome(VehicleModel vehicleModel);
+
+	List<VehicleModel> vehiclesByCoincidence(String plateSearch);
+
+	List<VehicleModel> vehiclesParkedFirstTime();
     
 }

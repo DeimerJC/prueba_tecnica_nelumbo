@@ -21,6 +21,10 @@ public interface IVehicleHandler {
 
 	VehicleResponseDto registerIncome(VehicleRequestDto vehicleRequestDto);
 
-	MessageResponseDto checkOut(VehicleRequestDto vehicleRequestDto); 
+	MessageResponseDto checkOut(VehicleRequestDto vehicleRequestDto);
+
+	List<VehicleResponseExtDto> vehiclesByCoincidence(String plateSearch);
+
+	List<VehicleResponseExtDto> vehiclesParkedFirstTime();  
 
 }

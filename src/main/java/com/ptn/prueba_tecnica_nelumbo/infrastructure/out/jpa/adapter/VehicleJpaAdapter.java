@@ -58,4 +58,22 @@ public class VehicleJpaAdapter implements IVehiclePersistencePort {
 		return iVehicleEntityMapper.toModel(iVehicleRepository.findByPlate(plate));
 	}
 
+	@Override
+	public List<VehicleModel> vehiclesByCoincidence(String plateSearch) {
+		List<VehicleEntity> entityList = iVehicleRepository.searchVehicles(plateSearch);
+        if (entityList.isEmpty()) {
+            Collections.emptyList();
+        }
+        return iVehicleEntityMapper.toModelList(entityList);
+	}
+
+	@Override
+	public List<VehicleModel> vehiclesParkedFirstTime() {
+		List<VehicleEntity> entityList = iVehicleRepository.vehiclesParkedFirstTime();
+        if (entityList.isEmpty()) {
+            Collections.emptyList();
+        }
+        return iVehicleEntityMapper.toModelList(entityList);
+	}
+
 }

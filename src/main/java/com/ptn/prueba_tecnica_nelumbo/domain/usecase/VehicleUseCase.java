@@ -100,8 +100,10 @@ public class VehicleUseCase implements IVehicleServicePort {
 		VehicleModel vehicleModeldb;
 		vehicleModeldb = iVehiclePersistencePort.getByPlate(vehicleModel.getPlate());
 		
-		if(vehicleModeldb != null) {
-			if(vehicleModeldb.getStatus().equals(Constants.STATUS_DISABLE)) {
+		if (vehicleModeldb != null) {
+			if (vehicleModeldb.getStatus().equals(Constants.STATUS_DISABLE)) {
+				throw new BadRequestException("No se puede Registrar Salida, no existe la placa en el parqueadero");
+			} else if (!vehicleModeldb.getParkingModel().getId().equals(vehicleModel.getParkingModel().getId())) {
 				throw new BadRequestException("No se puede Registrar Salida, no existe la placa en el parqueadero");
 			}
 		} else {
@@ -114,11 +116,33 @@ public class VehicleUseCase implements IVehicleServicePort {
 		
 		//Se registra en la tabla historial de parqueaderos
 		ParkingHistoryModel parkingHistoryModel;
-		parkingHistoryModel = new ParkingHistoryModel(null, vehicleModeldb, vehicleModeldb.getParkingModel(), new Date(), null);
+		parkingHistoryModel = new ParkingHistoryModel(null, vehicleModeldb, vehicleModeldb.getParkingModel(), vehicleModeldb.getDateAdmission(), new Date(), null);
 		
 		iParkingHistoryServicePort.saveParkingHistory(parkingHistoryModel);
 		
 		return new MessageResponseDto("Salida registrada");
+	}
+
+	@Override
+	public List<VehicleModel> vehiclesByCoincidence(String plateSearch) {
+		List<VehicleModel> vehicleModelList = iVehiclePersistencePort.vehiclesByCoincidence(plateSearch);
+		
+		if(vehicleModelList.isEmpty()) {
+			throw new NoDataFoundException("No se encontró vehiculos");
+		}
+		
+		return vehicleModelList;
+	}
+
+	@Override
+	public List<VehicleModel> vehiclesParkedFirstTime() {
+		List<VehicleModel> vehicleModelList = iVehiclePersistencePort.vehiclesParkedFirstTime();
+		
+		if(vehicleModelList.isEmpty()) {
+			throw new NoDataFoundException("No se encontró vehiculos");
+		}
+		
+		return vehicleModelList;
 	}
 
 }
