@@ -1,6 +1,9 @@
  package com.ptn.prueba_tecnica_nelumbo.application.handler.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +79,38 @@ public class ParkingHistoryHandler implements IParkingHistoryHandler {
 	@Override
 	public Double parkingProfitsYear(Long parkingId) {
 		return iParkingHistoryServicePort.parkingProfitsYear(parkingId);
+	}
+
+	@Override
+	public List<Map<String, Long>> mostRegisteredVehicles() {
+		List<Object[]> results = iParkingHistoryServicePort.mostRegisteredVehicles();
+	    List<Map<String, Long>> resultMap = new ArrayList<>();
+	    Map<String, Long> map;
+	    for (Object[] result : results) {
+	    	map = new HashMap<>();
+	        Long id = ((Number) result[0]).longValue();
+	        Long amount = ((Number) result[1]).longValue();
+	        map.put("id", id);
+	        map.put("amount", amount);
+	        resultMap.add(map);
+	    }
+		return resultMap;
+	}
+
+	@Override
+	public List<Map<String, Long>> mostRegisteredVehiclesByParking(Long parkingId) {
+		List<Object[]> results = iParkingHistoryServicePort.mostRegisteredVehiclesByParking(parkingId);
+	    List<Map<String, Long>> resultMap = new ArrayList<>();
+	    Map<String, Long> map;
+	    for (Object[] result : results) {
+	    	map = new HashMap<>();
+	        Long id = ((Number) result[0]).longValue();
+	        Long amount = ((Number) result[1]).longValue();
+	        map.put("id", id);
+	        map.put("amount", amount);
+	        resultMap.add(map);
+	    }
+		return resultMap;
 	}
 	
 }

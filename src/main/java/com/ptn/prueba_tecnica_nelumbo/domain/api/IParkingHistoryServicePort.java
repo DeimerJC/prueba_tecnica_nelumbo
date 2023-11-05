@@ -24,4 +24,8 @@ public interface IParkingHistoryServicePort {
 
 	Double parkingProfitsYear(Long parkingId);
 
+	List<Object[]> mostRegisteredVehicles();
+
+	List<Object[]> mostRegisteredVehiclesByParking(Long parkingId);
+
 }

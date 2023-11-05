@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingHistoryServicePort;
+import com.ptn.prueba_tecnica_nelumbo.domain.exception.NoDataFoundException;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.ParkingHistoryModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IParkingHistoryPersistencePort;
 
@@ -28,7 +29,14 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 
 	@Override
 	public ParkingHistoryModel getParkingHistory(Long parkingHistoryId) {
-		return iParkingHistoryPersistencePort.getParkingHistory(parkingHistoryId);
+
+		ParkingHistoryModel parkingHistoryModel;
+		parkingHistoryModel = iParkingHistoryPersistencePort.getParkingHistory(parkingHistoryId);
+		
+		if(parkingHistoryModel == null) {
+			throw new NoDataFoundException("No se encontró un historial con el id "+parkingHistoryId);
+		}
+		return parkingHistoryModel;
 	}
 
 	@Override
@@ -59,6 +67,28 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 	@Override
 	public Double parkingProfitsYear(Long parkingId) {
 		return iParkingHistoryPersistencePort.parkingProfitsYear(parkingId);
+	}
+
+	@Override
+	public List<Object[]> mostRegisteredVehicles() {
+		List<Object[]> list = iParkingHistoryPersistencePort.mostRegisteredVehicles();
+		
+		if(list.isEmpty()) {
+			throw new NoDataFoundException("No se encontró vehiculos");
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<Object[]> mostRegisteredVehiclesByParking(Long parkingId) {
+		List<Object[]> list = iParkingHistoryPersistencePort.mostRegisteredVehiclesByParking(parkingId);
+		
+		if(list.isEmpty()) {
+			throw new NoDataFoundException("No se encontró vehiculos");
+		}
+		
+		return list;
 	}
 
 }

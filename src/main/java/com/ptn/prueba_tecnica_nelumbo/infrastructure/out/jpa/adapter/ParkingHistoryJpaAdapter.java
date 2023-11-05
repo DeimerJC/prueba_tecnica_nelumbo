@@ -67,4 +67,14 @@ public class ParkingHistoryJpaAdapter implements IParkingHistoryPersistencePort 
 		return iParkingHistoryRepository.parkingProfitsYear(parkingId); 
 	}
 
+	@Override
+	public List<Object[]> mostRegisteredVehicles() {
+		return iParkingHistoryRepository.mostRegisteredVehicles();
+	}
+
+	@Override
+	public List<Object[]> mostRegisteredVehiclesByParking(Long parkingId) {
+		return iParkingHistoryRepository.mostRegisteredVehiclesByParking(parkingId);
+	}
+
 }

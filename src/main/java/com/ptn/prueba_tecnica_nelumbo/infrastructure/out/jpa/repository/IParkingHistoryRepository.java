@@ -1,7 +1,6 @@
 package com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,20 +10,22 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.ParkingHisto
 
 public interface IParkingHistoryRepository extends JpaRepository<ParkingHistoryEntity, Long> {
 	
-	@Query("SELECT vehicleEntity.id, COUNT(*) AS cantidad_registros\r\n"
-			+ "FROM ParkingHistoryEntity\r\n"
-			+ "GROUP BY vehicleEntity.id\r\n"
-			+ "ORDER BY cantidad_registros DESC\r\n"
-			+ "LIMIT 10")
-    List<Map<?,?>> mostRegisteredVehicles();
+	@Query(nativeQuery = true,
+			value = "SELECT vehicle_id as id, COUNT(*) AS amount\r\n"
+					+ "FROM parking_history\r\n"
+					+ "GROUP BY vehicle_id\r\n"
+					+ "ORDER BY amount DESC\r\n"
+					+ "LIMIT 10")
+	List<Object[]> mostRegisteredVehicles();
 	
-	@Query("SELECT vehicleEntity.id, COUNT(*) AS cantidad_registros\r\n"
-			+ "FROM ParkingHistoryEntity\r\n"
-			+ "where parkingEntity.id = :id_parking\r\n"
-			+ "GROUP BY vehicleEntity.id\r\n"
-			+ "ORDER BY cantidad_registros DESC\r\n"
-			+ "LIMIT 10")
-	List<Map<?,?>> mostRegisteredVehiclesByParking(@Param("id_parking") Long idParking);
+	@Query(nativeQuery = true,
+			value = "SELECT vehicle_id as id, COUNT(*) AS amount\r\n"
+					+ "FROM parking_history\r\n"
+					+ "where parking_id = :id_parking\r\n"
+					+ "GROUP BY vehicle_id\r\n"
+					+ "ORDER BY amount DESC\r\n"
+					+ "LIMIT 10")
+	List<Object[]> mostRegisteredVehiclesByParking(@Param("id_parking") Long idParking);
 	
 	@Query("SELECT \r\n"
 			+ "    SUM((EXTRACT(EPOCH FROM ph.departureDate) - EXTRACT(EPOCH FROM ph.dateAdmission)) / 3600 * pa.valueHour) AS ganancias_dia\r\n"

@@ -1,6 +1,7 @@
 package com.ptn.prueba_tecnica_nelumbo.infrastructure.input.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -99,6 +100,32 @@ public class IndicatorsRestController {
     @GetMapping("/vehicles-profits-year/{parkingId}")
     public ResponseEntity<Double> parkingProfitsYear(@PathVariable Long parkingId) {
         return ResponseEntity.ok(iParkingHistoryHandler.parkingProfitsYear(parkingId));
+    }
+    
+
+    @Operation(summary = "Ten vehicles that have been registered the most times in the\r\n"
+    		+ "different parking lots.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Most registered vehicles."),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/most-registered-vehicles")
+    public ResponseEntity<List<Map<String, Long>>> mostRegisteredVehicles() {
+        return ResponseEntity.ok(iParkingHistoryHandler.mostRegisteredVehicles());
+    }
+    
+
+    @Operation(summary = "ten vehicles that have been registered the most times in the\r\n"
+    		+ "different parking spaces by id.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Most registered vehicles."),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/most-registered-vehicles/{parkingId}")
+    public ResponseEntity<List<Map<String, Long>>> mostRegisteredVehiclesByParking(@PathVariable Long parkingId) {
+        return ResponseEntity.ok(iParkingHistoryHandler.mostRegisteredVehiclesByParking(parkingId));
     }
     
 }
