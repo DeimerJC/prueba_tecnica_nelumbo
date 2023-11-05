@@ -7,16 +7,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingHistoryServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IRoleServicePort;
+import com.ptn.prueba_tecnica_nelumbo.domain.api.ISendMailServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IUserServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IVehicleServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IParkingHistoryPersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IParkingPersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IRolePersistencePort;
+import com.ptn.prueba_tecnica_nelumbo.domain.spi.ISendMailPersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IUserPersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IVehiclePersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.ParkingHistoryUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.ParkingUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.RoleUseCase;
+import com.ptn.prueba_tecnica_nelumbo.domain.usecase.SendMailUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.UserUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.VehicleUseCase;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.adapter.ParkingHistoryJpaAdapter;
@@ -34,6 +37,8 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.repository.IParking
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.repository.IRoleRepository;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.repository.IUserRepository;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.repository.IVehicleRepository;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.openfeignclient.adapter.SendMailAdapter;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.openfeignclient.client.ISendMailClient;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,6 +56,7 @@ public class BeanConfiguration {
     private final IParkingEntityMapper iParkingEntityMapper;
     private final IParkingHistoryRepository iParkingHistoryRepository;
     private final IParkingHistoryEntityMapper iParkingHistoryEntityMapper;
+    private final ISendMailClient iSendMailClient;
     private final PasswordEncoder passwordEncoder;
     
     @Bean
@@ -101,6 +107,16 @@ public class BeanConfiguration {
     @Bean
     public IParkingHistoryServicePort iParkingHistoryServicePort() {
     	return new ParkingHistoryUseCase(iParkingHistoryPersistencePort());
+    }
+    
+    @Bean
+    public ISendMailPersistencePort iSendMailPersistencePort() {
+    	return new SendMailAdapter(iSendMailClient);
+    }
+    
+    @Bean
+    public ISendMailServicePort iSendMailServicePort() {
+    	return new SendMailUseCase(iSendMailPersistencePort(), iVehiclePersistencePort());
     }
     
 }

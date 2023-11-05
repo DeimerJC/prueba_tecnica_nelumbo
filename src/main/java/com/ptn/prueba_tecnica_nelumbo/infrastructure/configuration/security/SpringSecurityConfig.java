@@ -50,6 +50,7 @@ public class SpringSecurityConfig {
 	            .requestMatchers(HttpMethod.DELETE, "/api/v1/parking/{idParking}").hasAuthority(Constants.ROLE_ADMIN)
 	            .requestMatchers("/api/v1/vehicle/parking-income").hasAuthority(Constants.ROLE_SOCIO)
 	            .requestMatchers("/api/v1/vehicle/parking-exit").hasAuthority(Constants.ROLE_SOCIO)
+	            .requestMatchers("/api/v1/send-mail").hasAuthority(Constants.ROLE_ADMIN)
 				.anyRequest().authenticated())
 				.cors(withDefaults())
 				.addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
