@@ -57,5 +57,25 @@ public class ParkingHistoryHandler implements IParkingHistoryHandler {
 	public void deleteParkingHistory(Long parkingHistoryId) {
 		iParkingHistoryServicePort.deleteParkingHistory(parkingHistoryId);
 	}
+
+	@Override
+	public Double parkingProfitsDay(Long parkingId) {
+		return iParkingHistoryServicePort.parkingProfitsDay(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsWeek(Long parkingId) {
+		return iParkingHistoryServicePort.parkingProfitsWeek(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsMonth(Long parkingId) {
+		return iParkingHistoryServicePort.parkingProfitsMonth(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsYear(Long parkingId) {
+		return iParkingHistoryServicePort.parkingProfitsYear(parkingId);
+	}
 	
 }

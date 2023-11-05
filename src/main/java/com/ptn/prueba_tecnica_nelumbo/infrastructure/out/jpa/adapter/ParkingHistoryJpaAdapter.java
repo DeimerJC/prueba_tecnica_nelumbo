@@ -47,4 +47,24 @@ public class ParkingHistoryJpaAdapter implements IParkingHistoryPersistencePort 
 		iParkingHistoryRepository.deleteById(parkingHistoryId);
 	}
 
+	@Override
+	public Double parkingProfitsDay(Long parkingId) {
+		return iParkingHistoryRepository.parkingProfitsDay(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsWeek(Long parkingId) {
+		return iParkingHistoryRepository.parkingProfitsWeek(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsMonth(Long parkingId) {
+		return iParkingHistoryRepository.parkingProfitsMonth(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsYear(Long parkingId) {
+		return iParkingHistoryRepository.parkingProfitsYear(parkingId); 
+	}
+
 }

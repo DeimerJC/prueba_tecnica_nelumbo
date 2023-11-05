@@ -41,4 +41,24 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 		iParkingHistoryPersistencePort.deleteParkingHistory(parkingHistoryId);
 	}
 
+	@Override
+	public Double parkingProfitsDay(Long parkingId) {
+		return iParkingHistoryPersistencePort.parkingProfitsDay(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsWeek(Long parkingId) {
+		return iParkingHistoryPersistencePort.parkingProfitsWeek(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsMonth(Long parkingId) {
+		return iParkingHistoryPersistencePort.parkingProfitsMonth(parkingId);
+	}
+
+	@Override
+	public Double parkingProfitsYear(Long parkingId) {
+		return iParkingHistoryPersistencePort.parkingProfitsYear(parkingId);
+	}
+
 }

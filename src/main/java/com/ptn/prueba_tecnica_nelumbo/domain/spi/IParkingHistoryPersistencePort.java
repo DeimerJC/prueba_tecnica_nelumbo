@@ -16,4 +16,12 @@ public interface IParkingHistoryPersistencePort {
 
     void deleteParkingHistory(Long parkingHistoryId);
 
+	Double parkingProfitsDay(Long parkingId);
+
+	Double parkingProfitsWeek(Long parkingId);
+
+	Double parkingProfitsMonth(Long parkingId);
+
+	Double parkingProfitsYear(Long parkingId);
+
 }

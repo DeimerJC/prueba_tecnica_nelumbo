@@ -34,7 +34,7 @@ public interface IParkingHistoryRepository extends JpaRepository<ParkingHistoryE
 			+ "    ph.departureDate IS NOT NULL\r\n"
 			+ "    AND pa.id = :id_parking\r\n"
 			+ "    AND DATE(ph.departureDate) = CURRENT_DATE")
-	List<Double> parkingProfitsDay(@Param("id_parking") Long idParking);
+	Double parkingProfitsDay(@Param("id_parking") Long idParking);
 	
 	@Query("SELECT \r\n"
 			+ "    SUM((EXTRACT(EPOCH FROM ph.departureDate) - EXTRACT(EPOCH FROM ph.dateAdmission)) / 3600 * pa.valueHour) AS ganancias_dia\r\n"
@@ -44,7 +44,7 @@ public interface IParkingHistoryRepository extends JpaRepository<ParkingHistoryE
 			+ "    ph.departureDate IS NOT NULL\r\n"
 			+ "    AND pa.id = :id_parking\r\n"
 			+ "    AND FUNCTION('DATE_TRUNC', 'week', ph.departureDate) = FUNCTION('DATE_TRUNC', 'week', CURRENT_TIMESTAMP)")
-	List<Double> parkingProfitsWeek(@Param("id_parking") Long idParking);
+	Double parkingProfitsWeek(@Param("id_parking") Long idParking);
 	
 	@Query("SELECT \r\n"
 			+ "    SUM((EXTRACT(EPOCH FROM ph.departureDate) - EXTRACT(EPOCH FROM ph.dateAdmission)) / 3600 * pa.valueHour) AS ganancias_dia\r\n"
@@ -54,7 +54,7 @@ public interface IParkingHistoryRepository extends JpaRepository<ParkingHistoryE
 			+ "    ph.departureDate IS NOT NULL\r\n"
 			+ "    AND pa.id = :id_parking\r\n"
 			+ "    AND FUNCTION('DATE_TRUNC', 'month', ph.departureDate) = FUNCTION('DATE_TRUNC', 'month', CURRENT_TIMESTAMP)")
-	List<Double> parkingProfitsMonth(@Param("id_parking") Long idParking);
+	Double parkingProfitsMonth(@Param("id_parking") Long idParking);
 	
 	@Query("SELECT \r\n"
 			+ "    SUM((EXTRACT(EPOCH FROM ph.departureDate) - EXTRACT(EPOCH FROM ph.dateAdmission)) / 3600 * pa.valueHour) AS ganancias_dia\r\n"
@@ -64,6 +64,6 @@ public interface IParkingHistoryRepository extends JpaRepository<ParkingHistoryE
 			+ "    ph.departureDate IS NOT NULL\r\n"
 			+ "    AND pa.id = :id_parking\r\n"
 			+ "    AND FUNCTION('DATE_TRUNC', 'year', ph.departureDate) = FUNCTION('DATE_TRUNC', 'year', CURRENT_TIMESTAMP)")
-	List<Double> parkingProfitsYear(@Param("id_parking") Long idParking);
+	Double parkingProfitsYear(@Param("id_parking") Long idParking);
 
 }

@@ -53,4 +53,52 @@ public class IndicatorsRestController {
         return ResponseEntity.ok(iVehicleHandler.vehiclesParkedFirstTime());
     }
     
+
+    @Operation(summary = "Profits of the day.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parking profits."),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/vehicles-profits-day/{parkingId}")
+    public ResponseEntity<Double> parkingProfitsDay(@PathVariable Long parkingId) {
+        return ResponseEntity.ok(iParkingHistoryHandler.parkingProfitsDay(parkingId));
+    }
+    
+
+    @Operation(summary = "Profits of the week.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parking profits."),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/vehicles-profits-week/{parkingId}")
+    public ResponseEntity<Double> parkingProfitsWeek(@PathVariable Long parkingId) {
+        return ResponseEntity.ok(iParkingHistoryHandler.parkingProfitsWeek(parkingId));
+    }
+    
+
+    @Operation(summary = "Profits of the month.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parking profits."),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/vehicles-profits-month/{parkingId}")
+    public ResponseEntity<Double> parkingProfitsMonth(@PathVariable Long parkingId) {
+        return ResponseEntity.ok(iParkingHistoryHandler.parkingProfitsMonth(parkingId));
+    }
+    
+
+    @Operation(summary = "Profits of the year.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Parking profits."),
+            @ApiResponse(responseCode = "404", description = "No data found", 
+    		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
+    })
+    @GetMapping("/vehicles-profits-year/{parkingId}")
+    public ResponseEntity<Double> parkingProfitsYear(@PathVariable Long parkingId) {
+        return ResponseEntity.ok(iParkingHistoryHandler.parkingProfitsYear(parkingId));
+    }
+    
 }
