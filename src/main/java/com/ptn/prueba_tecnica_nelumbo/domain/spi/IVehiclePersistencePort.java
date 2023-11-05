@@ -23,5 +23,7 @@ public interface IVehiclePersistencePort {
 	List<VehicleModel> vehiclesByCoincidence(String plateSearch);
 
 	List<VehicleModel> vehiclesParkedFirstTime();
+	
+	Boolean verifyLimitVehicles(Long idParking);
     
 }

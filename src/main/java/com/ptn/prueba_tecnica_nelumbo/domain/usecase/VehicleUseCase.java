@@ -69,7 +69,11 @@ public class VehicleUseCase implements IVehicleServicePort {
 	@Override
 	public VehicleModel registerIncome(VehicleModel vehicleModel) {
 		
-		iParkingServicePort.getParking(vehicleModel.getParkingModel().getId());			
+		iParkingServicePort.getParking(vehicleModel.getParkingModel().getId());	
+		
+		if (iVehiclePersistencePort.verifyLimitVehicles(vehicleModel.getParkingModel().getId())) {
+			throw new BadRequestException("No se puede Registrar Ingreso, el parqueadero se encuentra al limite de vehiculos");
+		}
 		
 		VehicleModel vehicleModeldb;
 		vehicleModeldb = iVehiclePersistencePort.getByPlate(vehicleModel.getPlate());

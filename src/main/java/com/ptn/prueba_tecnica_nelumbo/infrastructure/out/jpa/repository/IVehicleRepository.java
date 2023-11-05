@@ -19,5 +19,15 @@ public interface IVehicleRepository extends JpaRepository<VehicleEntity, Long> {
 	
 	@Query("SELECT v FROM VehicleEntity v WHERE v.plate LIKE %:plate_search% and v.status='ENABLE'")
 	List<VehicleEntity> searchVehicles(@Param("plate_search") String plateSearch);
+	
+	@Query("SELECT CASE\r\n"
+			+ "        WHEN COUNT(v.id) >= pa.vehicleLimit THEN TRUE\r\n"
+			+ "        ELSE FALSE\r\n"
+			+ "    END AS esta_lleno\r\n"
+			+ "FROM ParkingEntity pa\r\n"
+			+ "LEFT JOIN VehicleEntity v ON pa.id = v.parkingEntity.id\r\n"
+			+ "where pa.id = :id_parking and v.status='ENABLE'\r\n"
+			+ "GROUP BY pa.id, pa.vehicleLimit")
+	Boolean verifyLimitVehicles(@Param("id_parking") Long idParking);
 
 }
