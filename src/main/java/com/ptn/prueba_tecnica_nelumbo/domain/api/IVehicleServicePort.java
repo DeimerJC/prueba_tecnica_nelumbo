@@ -9,7 +9,7 @@ public interface IVehicleServicePort {
 	
 	VehicleModel saveVehicle(VehicleModel vehicleModel);
 
-    List<VehicleModel> getAllVehicles();
+    List<VehicleModel> getAllVehicles(Long idParking, String token);
 
     VehicleModel getVehicle(Long vehicleId);
 

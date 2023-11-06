@@ -10,22 +10,27 @@ import com.ptn.prueba_tecnica_nelumbo.domain.api.IVehicleServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.BadRequestException;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.NoDataFoundException;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.ParkingHistoryModel;
+import com.ptn.prueba_tecnica_nelumbo.domain.model.ParkingModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.VehicleModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IVehiclePersistencePort;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.jwt.JwtUtilService;
 
 public class VehicleUseCase implements IVehicleServicePort {
 
     private final IVehiclePersistencePort iVehiclePersistencePort;
     private final IParkingServicePort iParkingServicePort;
     private final IParkingHistoryServicePort iParkingHistoryServicePort;
+    private final JwtUtilService jwtUtilService;
 
     public VehicleUseCase(IVehiclePersistencePort iVehiclePersistencePort,
     		IParkingServicePort iParkingServicePort,
-    		IParkingHistoryServicePort iParkingHistoryServicePort) {
+    		IParkingHistoryServicePort iParkingHistoryServicePort,
+    		JwtUtilService jwtUtilService) {
         this.iVehiclePersistencePort = iVehiclePersistencePort;
         this.iParkingServicePort = iParkingServicePort;
         this.iParkingHistoryServicePort = iParkingHistoryServicePort;
+        this.jwtUtilService = jwtUtilService;
     }
 
 	@Override
@@ -34,8 +39,20 @@ public class VehicleUseCase implements IVehicleServicePort {
 	}
 
 	@Override
-	public List<VehicleModel> getAllVehicles() {
-		List<VehicleModel> vehicleModelList = iVehiclePersistencePort.getAllVehicles();
+	public List<VehicleModel> getAllVehicles(Long idParking, String token) {
+		List<VehicleModel> vehicleModelList = null;
+		
+		String role = jwtUtilService.getRolFromToken(token);
+		Long idUser = Long.valueOf(jwtUtilService.getIdUsuarioFromToken(token));
+		
+		if (role.equals(Constants.ROLE_SOCIO)) {
+			ParkingModel parkingModel = iParkingServicePort.getParking(idParking);	
+			if (!parkingModel.getUserModel().getId().equals(idUser)) {
+				throw new BadRequestException("El parqueadero no pertenece al usuario");
+			}
+		}
+		
+		vehicleModelList = iVehiclePersistencePort.getAllVehiclesByParking(idParking);
 		
 		if(vehicleModelList.isEmpty()) {
 			throw new NoDataFoundException("No se encontró vehiculos");

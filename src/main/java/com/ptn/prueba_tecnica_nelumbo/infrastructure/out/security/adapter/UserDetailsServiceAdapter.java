@@ -34,7 +34,10 @@ public class UserDetailsServiceAdapter implements UserDetailsService {
 		List<GrantedAuthority> authorities = null;
 		authorities = permisos.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
-		return new PrincipalUserEntity(userModel.getEmail(), userModel.getPass(), true, true, true, true,
+		return new PrincipalUserEntity(userModel.getId(), userModel.getName(), 
+				userModel.getIdentification(), 
+				userModel.getRoleModel().getRoleName(),
+				userModel.getEmail(), userModel.getPass(), true, true, true, true,
 				authorities);
 	}
 

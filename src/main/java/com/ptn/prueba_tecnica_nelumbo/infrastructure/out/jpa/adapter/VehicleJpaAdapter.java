@@ -81,4 +81,13 @@ public class VehicleJpaAdapter implements IVehiclePersistencePort {
 		return iVehicleRepository.verifyLimitVehicles(idParking);
 	}
 
+	@Override
+	public List<VehicleModel> getAllVehiclesByParking(Long idParking) {
+		List<VehicleEntity> entityList = iVehicleRepository.findAllByParkingId(idParking);
+        if (entityList.isEmpty()) {
+            Collections.emptyList();
+        }
+        return iVehicleEntityMapper.toModelList(entityList);
+	}
+
 }

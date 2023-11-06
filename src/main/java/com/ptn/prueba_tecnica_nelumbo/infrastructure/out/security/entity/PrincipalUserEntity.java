@@ -12,16 +12,18 @@ public class PrincipalUserEntity extends User {
 	private Long id;
     private String name;
     private String dni;
+    private String role;
 
     public PrincipalUserEntity(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 
-    public PrincipalUserEntity(Long id, String name, String dni, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public PrincipalUserEntity(Long id, String name, String dni, String role, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.name = name;
         this.dni = dni;
+        this.role = role;
     }
 
     public Long getId() {
@@ -47,5 +49,13 @@ public class PrincipalUserEntity extends User {
     public void setDni(String dni) {
         this.dni = dni;
     }
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 }

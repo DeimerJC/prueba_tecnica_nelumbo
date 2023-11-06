@@ -8,7 +8,6 @@ import com.ptn.prueba_tecnica_nelumbo.application.openfeigndto.response.MessageR
 import com.ptn.prueba_tecnica_nelumbo.application.openfeigndto.request.SendMailClientRequestDto;
 
 @FeignClient(name = "${ms-envio-correo.name}", url = "${ms-envio-correo.url}")
-//@Repository
 public interface ISendMailClient {
 	
 	@PostMapping("/api/v1/send-mail")

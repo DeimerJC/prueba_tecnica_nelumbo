@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.security.entity.PrincipalUserEntity;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtUtilService {
@@ -34,32 +37,55 @@ public class JwtUtilService {
 	public Date extractExpiration(String token) {
 		return extractClaim(token, Claims::getExpiration);
 	}
+	
+	public Integer getIdUsuarioFromToken(String token) {
+		return (Integer)extractAllClaims(token).get("id");
+	}
+	
+	public String getRolFromToken(String token) {
+		return (String)extractAllClaims(token).get("role");
+	}
 
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		return claimsResolver.apply(extractAllClaims(token));
 	}
 
-	private Claims extractAllClaims(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+	public Claims extractAllClaims(String token) {
+		Claims claims = Jwts.parserBuilder()
+			    .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes())) // Configura la clave secreta para verificar la firma
+			    .build()
+			    .parseClaimsJws(token)
+			    .getBody();
+
+		return claims;//Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
 	}
 
 	private Boolean isTokenExpired(String token) {
 		return extractExpiration(token).before(new Date());
 	}
 
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(PrincipalUserEntity userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		// Agregando informacion adicional como "claim"
-		var rol = userDetails.getAuthorities().stream().collect(Collectors.toList()).get(0);
-		claims.put("rol", rol);
+		var authorities = userDetails.getAuthorities().stream().collect(Collectors.toList()).get(0);
+		claims.put("id", userDetails.getId());
+		claims.put("name", userDetails.getName());
+		claims.put("dni", userDetails.getDni());
+		claims.put("role", userDetails.getRole());
+		claims.put("authorities", authorities);
 		return createToken(claims, userDetails.getUsername());
 	}
 
 	private String createToken(Map<String, Object> claims, String subject) {
 
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+		return Jwts.builder()
+//				.setHeaderParam("typ", "JWT")
+				.setClaims(claims)
+				.setSubject(subject)
+				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
-				.signWith(SignatureAlgorithm.HS256, secret).compact();
+				.signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
+				.compact();
 	}
 
 	public boolean validateToken(String token, UserDetails userDetails) {

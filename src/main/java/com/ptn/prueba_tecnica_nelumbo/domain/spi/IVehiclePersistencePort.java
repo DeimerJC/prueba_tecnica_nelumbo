@@ -9,7 +9,9 @@ public interface IVehiclePersistencePort {
 	VehicleModel saveVehicle(VehicleModel vehicleModel);
 
     List<VehicleModel> getAllVehicles();
-
+    
+    List<VehicleModel> getAllVehiclesByParking(Long idParking);
+    
     VehicleModel getVehicle(Long vehicleId);
 
     VehicleModel updateVehicle(VehicleModel vehicleModel);

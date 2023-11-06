@@ -11,7 +11,7 @@ public interface IVehicleHandler {
 	
 	VehicleResponseDto saveVehicle(VehicleRequestDto vehicleRequestDto);
 
-    List<VehicleResponseExtDto> getAllVehicles();
+    List<VehicleResponseExtDto> getAllVehicles(Long idParking, String token);
 
     VehicleResponseDto getVehicle(Long vehicleId);
 

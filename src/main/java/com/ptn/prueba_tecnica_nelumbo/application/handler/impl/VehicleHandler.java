@@ -35,8 +35,8 @@ public class VehicleHandler implements IVehicleHandler {
     }
 
 	@Override
-	public List<VehicleResponseExtDto> getAllVehicles() {
-		return iVehicleResponseMapper.toResponseListExt( iVehicleServicePort.getAllVehicles() );
+	public List<VehicleResponseExtDto> getAllVehicles(Long idParking, String token) {
+		return iVehicleResponseMapper.toResponseListExt( iVehicleServicePort.getAllVehicles(idParking, token) );
     }
 
 	@Override

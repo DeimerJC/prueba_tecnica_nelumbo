@@ -14,6 +14,9 @@ public interface IVehicleRepository extends JpaRepository<VehicleEntity, Long> {
 	
 	List<VehicleEntity> findAllByStatus(String status);
 	
+	@Query("select v from VehicleEntity v where v.status='ENABLE' and v.parkingEntity.id = :idParking")
+    List<VehicleEntity> findAllByParkingId(Long idParking);
+	
 	@Query("select v from VehicleEntity v where v.status='ENABLE' and NOT EXISTS (SELECT ph FROM ParkingHistoryEntity ph WHERE v.parkingEntity.id = ph.parkingEntity.id and v.id=ph.vehicleEntity.id)")
     List<VehicleEntity> vehiclesParkedFirstTime();
 	

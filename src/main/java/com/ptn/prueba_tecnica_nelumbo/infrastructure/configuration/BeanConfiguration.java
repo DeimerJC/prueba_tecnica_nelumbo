@@ -22,6 +22,7 @@ import com.ptn.prueba_tecnica_nelumbo.domain.usecase.RoleUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.SendMailUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.UserUseCase;
 import com.ptn.prueba_tecnica_nelumbo.domain.usecase.VehicleUseCase;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.jwt.JwtUtilService;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.adapter.ParkingHistoryJpaAdapter;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.adapter.ParkingJpaAdapter;
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.adapter.RoleJpaAdapter;
@@ -58,6 +59,7 @@ public class BeanConfiguration {
     private final IParkingHistoryEntityMapper iParkingHistoryEntityMapper;
     private final ISendMailClient iSendMailClient;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtilService jwtUtilService;
     
     @Bean
     public IUserPersistencePort iUserPersistencePort() {
@@ -86,7 +88,7 @@ public class BeanConfiguration {
     
     @Bean
     public IVehicleServicePort iVehicleServicePort() {
-    	return new VehicleUseCase(iVehiclePersistencePort(), iParkingServicePort(), iParkingHistoryServicePort());
+    	return new VehicleUseCase(iVehiclePersistencePort(), iParkingServicePort(), iParkingHistoryServicePort(), jwtUtilService);
     }
     
     @Bean
