@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -54,7 +55,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> HandlerExceptionResolve(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, String>> handlerExceptionResolve(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<String, String>();
 
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -64,6 +65,23 @@ public class ControllerAdvisor {
             errors.put(fieldName, message);
         });
 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errors);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        Map<String, String> errors = new HashMap<String, String>();
+
+        // Verificar si la excepción tiene detalles sobre el campo problemático
+        if (ex.getCause() instanceof com.fasterxml.jackson.databind.exc.MismatchedInputException) {
+            com.fasterxml.jackson.databind.exc.MismatchedInputException mismatchedException =
+                    (com.fasterxml.jackson.databind.exc.MismatchedInputException) ex.getCause();
+            
+            String fieldName = mismatchedException.getPath().get(0).getFieldName();
+            errors.put(fieldName, "El campo no es válido.");
+        }
+        
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errors);
     }

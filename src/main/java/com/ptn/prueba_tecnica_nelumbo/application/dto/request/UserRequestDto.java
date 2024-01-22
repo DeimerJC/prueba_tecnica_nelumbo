@@ -2,8 +2,10 @@ package com.ptn.prueba_tecnica_nelumbo.application.dto.request;
 
 import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +13,12 @@ import lombok.Setter;
 @Setter
 public class UserRequestDto {
 	
-	private Long id;
+//	private Long id;
     
+//	@Pattern(regexp = "\\d+", message = Constants.FIELD_INTEGER)
 	@NotNull(message = Constants.FIELD_NOT_NULL)
+	@Digits(integer = 9999, fraction = 0, message = Constants.FIELD_INTEGER)
+    @Positive(message = Constants.FIELD_INTEGER_POSITIVE)
     private Long roleId;
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)
