@@ -3,6 +3,7 @@ package com.ptn.prueba_tecnica_nelumbo.infrastructure.input.rest;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.UserRequestDto;
@@ -37,15 +39,15 @@ public class UserRestController {
 
     @Operation(summary = "Add a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User created"),
             @ApiResponse(responseCode = "400", description = "Bad Request", 
             		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
             @ApiResponse(responseCode = "409", description = "User already exists",
             		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @PostMapping("/user")
-    public ResponseEntity<CreatedObjectResponseDto> saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-        return new ResponseEntity<CreatedObjectResponseDto>(iUserHandler.saveUser(userRequestDto), HttpStatus.CREATED);
+    @PostMapping(path= "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public CreatedObjectResponseDto saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return iUserHandler.saveUser(userRequestDto);
     }
     
 
