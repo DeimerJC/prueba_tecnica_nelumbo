@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingHistoryServicePort;
+import com.ptn.prueba_tecnica_nelumbo.domain.api.IParkingServicePort;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.NoDataFoundException;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.ParkingHistoryModel;
 import com.ptn.prueba_tecnica_nelumbo.domain.spi.IParkingHistoryPersistencePort;
@@ -11,9 +12,13 @@ import com.ptn.prueba_tecnica_nelumbo.domain.spi.IParkingHistoryPersistencePort;
 public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 
     private final IParkingHistoryPersistencePort iParkingHistoryPersistencePort;
+    
+    private final IParkingServicePort iParkingServicePort;
 
-    public ParkingHistoryUseCase(IParkingHistoryPersistencePort iParkingHistoryPersistencePort) {
+    public ParkingHistoryUseCase(IParkingHistoryPersistencePort iParkingHistoryPersistencePort,
+    		IParkingServicePort iParkingServicePort) {
         this.iParkingHistoryPersistencePort = iParkingHistoryPersistencePort;
+        this.iParkingServicePort = iParkingServicePort;
     }
 
 	@Override
@@ -56,7 +61,8 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 
 	@Override
 	public Double parkingProfitsWeek(Long parkingId) {
-		return iParkingHistoryPersistencePort.parkingProfitsWeek(parkingId);
+		Double pofrits = iParkingHistoryPersistencePort.parkingProfitsWeek(parkingId);
+		return (pofrits != null ? pofrits : 0);
 	}
 
 	@Override
@@ -66,8 +72,11 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 
 	@Override
 	public Double parkingProfitsYear(Long parkingId) {
-		return iParkingHistoryPersistencePort.parkingProfitsYear(parkingId);
+		parkingExists(parkingId);
+		Double pofrits = iParkingHistoryPersistencePort.parkingProfitsWeek(parkingId);
+		return (pofrits != null ? pofrits : 0);
 	}
+	
 
 	@Override
 	public List<Object[]> mostRegisteredVehicles() {
@@ -89,6 +98,10 @@ public class ParkingHistoryUseCase implements IParkingHistoryServicePort {
 		}
 		
 		return list;
+	}
+
+	private void parkingExists(Long parkingId) {
+		iParkingServicePort.getParking(parkingId);
 	}
 
 }

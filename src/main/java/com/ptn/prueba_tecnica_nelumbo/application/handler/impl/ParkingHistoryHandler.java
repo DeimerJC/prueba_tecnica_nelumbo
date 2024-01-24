@@ -1,15 +1,15 @@
  package com.ptn.prueba_tecnica_nelumbo.application.handler.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.ParkingHistoryRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ParkingHistoryResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ProfitsIndicatorsResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IParkingHistoryHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IParkingHistoryRequestMapper;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IParkingHistoryResponseMapper;
@@ -77,38 +77,50 @@ public class ParkingHistoryHandler implements IParkingHistoryHandler {
 	}
 
 	@Override
-	public Double parkingProfitsYear(Long parkingId) {
-		return iParkingHistoryServicePort.parkingProfitsYear(parkingId);
+	public ProfitsIndicatorsResponseDto parkingProfitsYear(Long parkingId) {
+		return new ProfitsIndicatorsResponseDto(iParkingHistoryServicePort.parkingProfitsYear(parkingId));
 	}
 
 	@Override
-	public List<Map<String, Long>> mostRegisteredVehicles() {
+	public List<MostRegisteredVehiclesResponseDto> mostRegisteredVehicles() {
 		List<Object[]> results = iParkingHistoryServicePort.mostRegisteredVehicles();
-	    List<Map<String, Long>> resultMap = new ArrayList<>();
-	    Map<String, Long> map;
+		List<MostRegisteredVehiclesResponseDto> resultMap = new ArrayList<>();
+	    MostRegisteredVehiclesResponseDto mostRegisteredVehiclesResponseDto;
+	    
 	    for (Object[] result : results) {
-	    	map = new HashMap<>();
+	    	mostRegisteredVehiclesResponseDto = new MostRegisteredVehiclesResponseDto();
 	        Long id = ((Number) result[0]).longValue();
 	        Long amount = ((Number) result[1]).longValue();
-	        map.put("id", id);
-	        map.put("amount", amount);
-	        resultMap.add(map);
+	        String parkingName = ((String) result[2]);
+	        String plate = ((String) result[3]);
+	        
+	        mostRegisteredVehiclesResponseDto.setVehicleId(id);
+	        mostRegisteredVehiclesResponseDto.setAmount(amount);
+	        mostRegisteredVehiclesResponseDto.setParkingName(parkingName);
+	        mostRegisteredVehiclesResponseDto.setPlate(plate);
+	        resultMap.add(mostRegisteredVehiclesResponseDto);
 	    }
 		return resultMap;
 	}
 
 	@Override
-	public List<Map<String, Long>> mostRegisteredVehiclesByParking(Long parkingId) {
+	public List<MostRegisteredVehiclesResponseDto> mostRegisteredVehiclesByParking(Long parkingId) {
 		List<Object[]> results = iParkingHistoryServicePort.mostRegisteredVehiclesByParking(parkingId);
-	    List<Map<String, Long>> resultMap = new ArrayList<>();
-	    Map<String, Long> map;
+	    List<MostRegisteredVehiclesResponseDto> resultMap = new ArrayList<>();
+	    MostRegisteredVehiclesResponseDto mostRegisteredVehiclesResponseDto;
+	    
 	    for (Object[] result : results) {
-	    	map = new HashMap<>();
+	    	mostRegisteredVehiclesResponseDto = new MostRegisteredVehiclesResponseDto();
 	        Long id = ((Number) result[0]).longValue();
 	        Long amount = ((Number) result[1]).longValue();
-	        map.put("id", id);
-	        map.put("amount", amount);
-	        resultMap.add(map);
+	        String parkingName = ((String) result[2]);
+	        String plate = ((String) result[3]);
+	        
+	        mostRegisteredVehiclesResponseDto.setVehicleId(id);
+	        mostRegisteredVehiclesResponseDto.setAmount(amount);
+	        mostRegisteredVehiclesResponseDto.setParkingName(parkingName);
+	        mostRegisteredVehiclesResponseDto.setPlate(plate);
+	        resultMap.add(mostRegisteredVehiclesResponseDto);
 	    }
 		return resultMap;
 	}

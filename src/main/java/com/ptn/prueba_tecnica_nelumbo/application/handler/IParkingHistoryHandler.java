@@ -1,10 +1,11 @@
 package com.ptn.prueba_tecnica_nelumbo.application.handler;
 
 import java.util.List;
-import java.util.Map;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.ParkingHistoryRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ParkingHistoryResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ProfitsIndicatorsResponseDto;
 
 public interface IParkingHistoryHandler {
 	
@@ -24,10 +25,10 @@ public interface IParkingHistoryHandler {
 
 	Double parkingProfitsMonth(Long parkingId);   
 
-	Double parkingProfitsYear(Long parkingId);
+	ProfitsIndicatorsResponseDto parkingProfitsYear(Long parkingId);
 
-	List<Map<String, Long>> mostRegisteredVehicles();
+	List<MostRegisteredVehiclesResponseDto> mostRegisteredVehicles();
 
-	List<Map<String, Long>> mostRegisteredVehiclesByParking(Long parkingId);   
+	List<MostRegisteredVehiclesResponseDto> mostRegisteredVehiclesByParking(Long parkingId);   
 
 }

@@ -1,7 +1,6 @@
 package com.ptn.prueba_tecnica_nelumbo.infrastructure.input.rest;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesResponseDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ProfitsIndicatorsResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseExtDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IParkingHistoryHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IVehicleHandler;
@@ -98,7 +99,7 @@ public class IndicatorsRestController {
     		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
     @GetMapping("/vehicles-profits-year/{parkingId}")
-    public ResponseEntity<Double> parkingProfitsYear(@PathVariable Long parkingId) {
+    public ResponseEntity<ProfitsIndicatorsResponseDto> parkingProfitsYear(@PathVariable Long parkingId) {
         return ResponseEntity.ok(iParkingHistoryHandler.parkingProfitsYear(parkingId));
     }
     
@@ -111,7 +112,7 @@ public class IndicatorsRestController {
     		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
     @GetMapping("/most-registered-vehicles")
-    public ResponseEntity<List<Map<String, Long>>> mostRegisteredVehicles() {
+    public ResponseEntity<List<MostRegisteredVehiclesResponseDto>> mostRegisteredVehicles() {
         return ResponseEntity.ok(iParkingHistoryHandler.mostRegisteredVehicles());
     }
     
@@ -124,7 +125,7 @@ public class IndicatorsRestController {
     		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
     @GetMapping("/most-registered-vehicles/{parkingId}")
-    public ResponseEntity<List<Map<String, Long>>> mostRegisteredVehiclesByParking(@PathVariable Long parkingId) {
+    public ResponseEntity<List<MostRegisteredVehiclesResponseDto>> mostRegisteredVehiclesByParking(@PathVariable Long parkingId) {
         return ResponseEntity.ok(iParkingHistoryHandler.mostRegisteredVehiclesByParking(parkingId));
     }
     

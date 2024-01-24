@@ -108,7 +108,7 @@ public class BeanConfiguration {
     
     @Bean
     public IParkingHistoryServicePort iParkingHistoryServicePort() {
-    	return new ParkingHistoryUseCase(iParkingHistoryPersistencePort());
+    	return new ParkingHistoryUseCase(iParkingHistoryPersistencePort(), iParkingServicePort());
     }
     
     @Bean
