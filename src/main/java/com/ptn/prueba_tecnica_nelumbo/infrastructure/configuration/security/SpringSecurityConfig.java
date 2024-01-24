@@ -48,7 +48,7 @@ public class SpringSecurityConfig {
 	            .requestMatchers("/api/v1/parkings").hasAuthority(Constants.ROLE_ADMIN)
 	            .requestMatchers(HttpMethod.GET, "/api/v1/parking/{idParking}").hasAuthority(Constants.ROLE_ADMIN)
 	            .requestMatchers(HttpMethod.DELETE, "/api/v1/parking/{idParking}").hasAuthority(Constants.ROLE_ADMIN)
-	            .requestMatchers("/api/v1/vehicle/parking-income").hasAuthority(Constants.ROLE_SOCIO)
+	            .requestMatchers("/api/v1/parkings/{parkingId}/vehicle").hasAuthority(Constants.ROLE_SOCIO)
 	            .requestMatchers("/api/v1/vehicle/parking-exit").hasAuthority(Constants.ROLE_SOCIO)
 	            .requestMatchers("/api/v1/send-mail").hasAuthority(Constants.ROLE_ADMIN)
 				.anyRequest().authenticated())

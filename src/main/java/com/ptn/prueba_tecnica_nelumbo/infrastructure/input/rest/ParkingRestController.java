@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.ParkingRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.CreatedObjectResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ParkingResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IParkingHandler;
 
@@ -43,8 +44,8 @@ public class ParkingRestController {
             		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
     @PostMapping("/parking")
-    public ResponseEntity<ParkingResponseDto> saveParking(@Valid @RequestBody ParkingRequestDto parkingRequestDto) {
-        return new ResponseEntity<ParkingResponseDto>(iParkingHandler.saveParking(parkingRequestDto), HttpStatus.CREATED);
+    public ResponseEntity<CreatedObjectResponseDto> saveParking(@Valid @RequestBody ParkingRequestDto parkingRequestDto) {
+        return new ResponseEntity<CreatedObjectResponseDto>(iParkingHandler.saveParking(parkingRequestDto), HttpStatus.CREATED);
     }
     
 
@@ -101,7 +102,7 @@ public class ParkingRestController {
 	@DeleteMapping("/parking/{idParking}")
 	public ResponseEntity<?> deleteParking(@PathVariable Long idParking) {
     	iParkingHandler.deleteParking(idParking);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }

@@ -84,7 +84,19 @@ public class VehicleUseCase implements IVehicleServicePort {
 	}
 
 	@Override
-	public VehicleModel registerIncome(VehicleModel vehicleModel) {
+	public VehicleModel registerIncome(VehicleModel vehicleModel, String token) {
+		
+		String role = jwtUtilService.getRolFromToken(token);
+		Long idUser = Long.valueOf(jwtUtilService.getIdUsuarioFromToken(token));
+		
+		if (role.equals(Constants.ROLE_SOCIO)) {
+			ParkingModel parkingModel = iParkingServicePort.getParking(vehicleModel.getParkingModel().getId());	
+			if (!parkingModel.getUserModel().getId().equals(idUser)) {
+				throw new BadRequestException("El parqueadero no pertenece al usuario");
+			}
+		} else {
+			throw new BadRequestException("El usuario no tiene permisos.");
+		}
 		
 		iParkingServicePort.getParking(vehicleModel.getParkingModel().getId());	
 		

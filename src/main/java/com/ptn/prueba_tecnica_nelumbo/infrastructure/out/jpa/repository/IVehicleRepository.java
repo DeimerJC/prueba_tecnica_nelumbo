@@ -23,14 +23,20 @@ public interface IVehicleRepository extends JpaRepository<VehicleEntity, Long> {
 	@Query("SELECT v FROM VehicleEntity v WHERE v.plate LIKE %:plate_search% and v.status='ENABLE'")
 	List<VehicleEntity> searchVehicles(@Param("plate_search") String plateSearch);
 	
-	@Query("SELECT CASE\r\n"
-			+ "        WHEN COUNT(v.id) >= pa.vehicleLimit THEN TRUE\r\n"
-			+ "        ELSE FALSE\r\n"
-			+ "    END AS esta_lleno\r\n"
-			+ "FROM ParkingEntity pa\r\n"
-			+ "LEFT JOIN VehicleEntity v ON pa.id = v.parkingEntity.id\r\n"
-			+ "where pa.id = :id_parking and v.status='ENABLE'\r\n"
-			+ "GROUP BY pa.id, pa.vehicleLimit")
+	@Query(nativeQuery = true,
+			value = "SELECT\r\n"
+					+ "  CASE\r\n"
+					+ "    WHEN COALESCE(SUM(CASE WHEN v.status = 'ENABLE' THEN 1 ELSE 0 END), 0) >= pa.vehicle_limit THEN TRUE\r\n"
+					+ "    ELSE FALSE\r\n"
+					+ "  END AS esta_lleno\r\n"
+					+ "FROM\r\n"
+					+ "  public.parking pa\r\n"
+					+ "LEFT JOIN\r\n"
+					+ "  public.vehicle v ON pa.id = v.parking_id\r\n"
+					+ "WHERE\r\n"
+					+ "  pa.id = :id_parking\r\n"
+					+ "GROUP BY\r\n"
+					+ "  pa.id, pa.vehicle_limit")
 	Boolean verifyLimitVehicles(@Param("id_parking") Long idParking);
 
 }

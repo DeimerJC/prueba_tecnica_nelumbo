@@ -59,5 +59,10 @@ public class UserJpaAdapter implements IUserPersistencePort {
 	public UserModel getByUsername(String username) {
 		return iUserEntityMapper.toModel(iUserRepository.findByEmail(username));
 	}
+
+	@Override
+	public UserModel getByIdentification(String identification) {
+		return iUserEntityMapper.toModel(iUserRepository.findByIdentification(identification));
+	}
     
 }

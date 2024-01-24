@@ -2,6 +2,7 @@ package com.ptn.prueba_tecnica_nelumbo.application.handler;
 
 import java.util.List;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleExitRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
@@ -19,9 +20,9 @@ public interface IVehicleHandler {
 
     void deleteVehicle(Long vehicleId);
 
-	VehicleResponseDto registerIncome(VehicleRequestDto vehicleRequestDto);
+	VehicleResponseDto registerIncome(Long parkingId, VehicleRequestDto vehicleRequestDto, String token); 
 
-	MessageResponseDto checkOut(VehicleRequestDto vehicleRequestDto);
+	MessageResponseDto checkOut(VehicleExitRequestDto vehicleExitRequestDto);
 
 	List<VehicleResponseExtDto> vehiclesByCoincidence(String plateSearch);
 

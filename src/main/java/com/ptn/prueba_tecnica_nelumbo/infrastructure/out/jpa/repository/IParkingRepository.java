@@ -6,4 +6,6 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.ParkingEntit
 
 public interface IParkingRepository extends JpaRepository<ParkingEntity, Long> {
 
+	ParkingEntity findByName(String name); 
+
 }

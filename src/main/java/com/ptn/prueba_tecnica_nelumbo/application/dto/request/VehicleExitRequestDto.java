@@ -10,10 +10,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VehicleRequestDto {
+public class VehicleExitRequestDto {
 	
-//	private Long id;
-	
+	@NotNull(message = Constants.FIELD_NOT_NULL)
+    private Long parkingId;
+
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
     @Pattern(regexp = "^[A-Za-z0-9]{6}$", message = "The plate is invalid.")

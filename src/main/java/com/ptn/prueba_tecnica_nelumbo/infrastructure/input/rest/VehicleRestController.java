@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleExitRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
@@ -44,9 +46,9 @@ public class VehicleRestController {
             @ApiResponse(responseCode = "404", description = "No data found",
             		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @PostMapping("/vehicle/parking-income")
-    public ResponseEntity<VehicleResponseDto> registerIncome(@Valid @RequestBody VehicleRequestDto vehicleRequestDto) {
-        return new ResponseEntity<VehicleResponseDto>(iVehicleHandler.registerIncome(vehicleRequestDto), HttpStatus.CREATED);
+    @PostMapping("/parkings/{parkingId}/vehicle")
+    public ResponseEntity<VehicleResponseDto> registerIncome(@PathVariable Long parkingId,  @Valid @RequestBody VehicleRequestDto vehicleRequestDto, @RequestHeader HttpHeaders headers) {
+        return new ResponseEntity<VehicleResponseDto>(iVehicleHandler.registerIncome(parkingId, vehicleRequestDto, headers.get("Authorization").get(0).substring(7)), HttpStatus.CREATED);
     }
 
 
@@ -59,9 +61,9 @@ public class VehicleRestController {
             @ApiResponse(responseCode = "404", description = "No data found",
             		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
-    @PostMapping("/vehicle/parking-exit")
-    public ResponseEntity<MessageResponseDto> checkOut(@Valid @RequestBody VehicleRequestDto vehicleRequestDto) {
-        return new ResponseEntity<MessageResponseDto>(iVehicleHandler.checkOut(vehicleRequestDto), HttpStatus.OK);
+    @DeleteMapping("/vehicle/parking-exit")
+    public ResponseEntity<MessageResponseDto> checkOut(@Valid @RequestBody VehicleExitRequestDto vehicleExitRequestDto) {
+        return new ResponseEntity<MessageResponseDto>(iVehicleHandler.checkOut(vehicleExitRequestDto), HttpStatus.OK);
     }
     
 

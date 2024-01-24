@@ -17,7 +17,7 @@ public interface IVehicleServicePort {
 
     void deleteVehicle(Long vehicleId);
 
-	VehicleModel registerIncome(VehicleModel vehicleModel);
+	VehicleModel registerIncome(VehicleModel vehicleModel, String token); 
 
 	MessageResponseDto checkOut(VehicleModel vehicleModel);
 

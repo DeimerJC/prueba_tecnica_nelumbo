@@ -16,4 +16,6 @@ public interface IParkingPersistencePort {
 
     void deleteParking(Long parkingId);
     
+    ParkingModel getParkingByName(String name);
+    
 }

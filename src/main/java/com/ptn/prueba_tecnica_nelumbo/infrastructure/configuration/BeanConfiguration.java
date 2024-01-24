@@ -68,7 +68,7 @@ public class BeanConfiguration {
 
     @Bean
     public IUserServicePort iUserServicePort() {
-        return new UserUseCase(iUserPersistencePort());
+        return new UserUseCase(iUserPersistencePort(), iRoleServicePort());
     }
     
     @Bean
@@ -98,7 +98,7 @@ public class BeanConfiguration {
     
     @Bean
     public IParkingServicePort iParkingServicePort() {
-    	return new ParkingUseCase(iParkingPersistencePort());
+    	return new ParkingUseCase(iParkingPersistencePort(), iUserServicePort());
     }
     
     @Bean

@@ -21,8 +21,6 @@ public class UserResponseDto {
 
     private String email;
     
-    private String pass;
-    
     private String status;
 
     private Date creation;

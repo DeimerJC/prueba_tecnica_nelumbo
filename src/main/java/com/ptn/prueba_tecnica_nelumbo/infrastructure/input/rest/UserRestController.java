@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.UserRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.CreatedObjectResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.UserResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IUserHandler;
 
@@ -43,8 +44,8 @@ public class UserRestController {
             		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error")))
     })
     @PostMapping("/user")
-    public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-        return new ResponseEntity<UserResponseDto>(iUserHandler.saveUser(userRequestDto), HttpStatus.CREATED);
+    public ResponseEntity<CreatedObjectResponseDto> saveUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return new ResponseEntity<CreatedObjectResponseDto>(iUserHandler.saveUser(userRequestDto), HttpStatus.CREATED);
     }
     
 

@@ -47,4 +47,9 @@ public class ParkingJpaAdapter implements IParkingPersistencePort {
 		iParkingRepository.deleteById(parkingId);
 	}
 
+	@Override
+	public ParkingModel getParkingByName(String name) {
+		return iParkingEntityMapper.toModel(iParkingRepository.findByName(name));
+	}
+
 }

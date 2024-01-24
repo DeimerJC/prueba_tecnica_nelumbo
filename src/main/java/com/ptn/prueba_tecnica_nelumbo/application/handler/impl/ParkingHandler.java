@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.ParkingRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.CreatedObjectResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ParkingResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IParkingHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IParkingRequestMapper;
@@ -24,13 +25,9 @@ public class ParkingHandler implements IParkingHandler {
 
     @Transactional
 	@Override
-	public ParkingResponseDto saveParking(ParkingRequestDto parkingRequestDto) {
-		return iParkingResponseMapper.toResponse(
-					iParkingServicePort.saveParking(
-						iParkingRequestMapper.toModel(parkingRequestDto)
-					)
-				);
-    }
+	public CreatedObjectResponseDto saveParking(ParkingRequestDto parkingRequestDto) {
+		return iParkingServicePort.saveParking(iParkingRequestMapper.toModel(parkingRequestDto));
+	}
 
 	@Override
 	public List<ParkingResponseDto> getAllParkings() {

@@ -7,5 +7,7 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.UserEntity;
 public interface IUserRepository extends JpaRepository<UserEntity, Long> {
 
 	UserEntity findByEmail(String email);
+	
+	UserEntity findByIdentification(String identification);
 
 }

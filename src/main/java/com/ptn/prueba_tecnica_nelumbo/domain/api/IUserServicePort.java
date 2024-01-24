@@ -2,11 +2,12 @@ package com.ptn.prueba_tecnica_nelumbo.domain.api;
 
 import java.util.List;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.CreatedObjectResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.domain.model.UserModel;
 
 public interface IUserServicePort {
 
-	UserModel saveUser(UserModel userModel);
+	CreatedObjectResponseDto saveUser(UserModel userModel);
 
     List<UserModel> getAllUsers();
 

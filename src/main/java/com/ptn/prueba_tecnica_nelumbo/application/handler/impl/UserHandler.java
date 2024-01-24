@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.UserRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.CreatedObjectResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.UserResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.handler.IUserHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IUserRequestMapper;
@@ -24,13 +25,9 @@ public class UserHandler implements IUserHandler {
 
     @Transactional
 	@Override
-	public UserResponseDto saveUser(UserRequestDto userRequestDto) {
-		return iUserResponseMapper.toResponse(
-					iUserServicePort.saveUser(
-						iUserRequestMapper.toModel(userRequestDto)
-					)
-				);
-    }
+	public CreatedObjectResponseDto saveUser(UserRequestDto userRequestDto) {
+		return iUserServicePort.saveUser(iUserRequestMapper.toModel(userRequestDto));
+	}
 
 	@Override
 	public List<UserResponseDto> getAllUsers() {

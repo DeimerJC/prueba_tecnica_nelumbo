@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleExitRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.VehicleRequestDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MessageResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseDto;
@@ -13,6 +14,8 @@ import com.ptn.prueba_tecnica_nelumbo.application.handler.IVehicleHandler;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IVehicleRequestMapper;
 import com.ptn.prueba_tecnica_nelumbo.application.mapper.IVehicleResponseMapper;
 import com.ptn.prueba_tecnica_nelumbo.domain.api.IVehicleServicePort;
+import com.ptn.prueba_tecnica_nelumbo.domain.model.ParkingModel;
+import com.ptn.prueba_tecnica_nelumbo.domain.model.VehicleModel;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,19 +65,23 @@ public class VehicleHandler implements IVehicleHandler {
 
 	@Transactional
 	@Override
-	public VehicleResponseDto registerIncome(VehicleRequestDto vehicleRequestDto) {
+	public VehicleResponseDto registerIncome(Long parkingId, VehicleRequestDto vehicleRequestDto, String token) {
+		VehicleModel vehicleModel = iVehicleRequestMapper.toModel(vehicleRequestDto);
+		vehicleModel.setParkingModel(new ParkingModel());
+		vehicleModel.getParkingModel().setId(parkingId);
+		
 		return iVehicleResponseMapper.toResponse(
 				iVehicleServicePort.registerIncome(
-						iVehicleRequestMapper.toModel(vehicleRequestDto)
+						vehicleModel, token
 				)
 			);
 	}
 
 	@Transactional
 	@Override
-	public MessageResponseDto checkOut(VehicleRequestDto vehicleRequestDto) {
+	public MessageResponseDto checkOut(VehicleExitRequestDto vehicleExitRequestDto) {
 		return iVehicleServicePort.checkOut(
-						iVehicleRequestMapper.toModel(vehicleRequestDto)
+						iVehicleRequestMapper.toModel(vehicleExitRequestDto)
 				);
 	}
 

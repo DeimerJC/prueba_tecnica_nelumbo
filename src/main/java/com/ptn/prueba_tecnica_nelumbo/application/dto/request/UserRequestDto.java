@@ -5,6 +5,7 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.configuration.Constants;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +36,7 @@ public class UserRequestDto {
 
 	@NotNull(message = Constants.FIELD_NOT_NULL)
     @NotBlank(message = Constants.FIELD_NOT_BLANK)
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "The 'email' field must be a valid email address.")
     private String email;
     
 	@NotNull(message = Constants.FIELD_NOT_NULL)

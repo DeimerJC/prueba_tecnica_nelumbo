@@ -71,7 +71,7 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        Map<String, String> errors = new HashMap<String, String>();
+        Map<String, String> errors = new HashMap<String, String>(); System.err.println("entro handlerHttpMessageNotReadableException");
 
         // Verificar si la excepción tiene detalles sobre el campo problemático
         if (ex.getCause() instanceof com.fasterxml.jackson.databind.exc.MismatchedInputException) {
