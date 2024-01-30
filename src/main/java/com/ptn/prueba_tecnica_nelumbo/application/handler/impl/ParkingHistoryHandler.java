@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.ParkingHistoryRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesParkingResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ParkingHistoryResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ProfitsIndicatorsResponseDto;
@@ -85,18 +86,16 @@ public class ParkingHistoryHandler implements IParkingHistoryHandler {
 	public List<MostRegisteredVehiclesResponseDto> mostRegisteredVehicles() {
 		List<Object[]> results = iParkingHistoryServicePort.mostRegisteredVehicles();
 		List<MostRegisteredVehiclesResponseDto> resultMap = new ArrayList<>();
-	    MostRegisteredVehiclesResponseDto mostRegisteredVehiclesResponseDto;
+		MostRegisteredVehiclesResponseDto mostRegisteredVehiclesResponseDto;
 	    
 	    for (Object[] result : results) {
 	    	mostRegisteredVehiclesResponseDto = new MostRegisteredVehiclesResponseDto();
 	        Long id = ((Number) result[0]).longValue();
 	        Long amount = ((Number) result[1]).longValue();
-	        String parkingName = ((String) result[2]);
-	        String plate = ((String) result[3]);
+	        String plate = ((String) result[2]);
 	        
 	        mostRegisteredVehiclesResponseDto.setVehicleId(id);
 	        mostRegisteredVehiclesResponseDto.setAmount(amount);
-	        mostRegisteredVehiclesResponseDto.setParkingName(parkingName);
 	        mostRegisteredVehiclesResponseDto.setPlate(plate);
 	        resultMap.add(mostRegisteredVehiclesResponseDto);
 	    }
@@ -104,13 +103,13 @@ public class ParkingHistoryHandler implements IParkingHistoryHandler {
 	}
 
 	@Override
-	public List<MostRegisteredVehiclesResponseDto> mostRegisteredVehiclesByParking(Long parkingId) {
+	public List<MostRegisteredVehiclesParkingResponseDto> mostRegisteredVehiclesByParking(Long parkingId) {
 		List<Object[]> results = iParkingHistoryServicePort.mostRegisteredVehiclesByParking(parkingId);
-	    List<MostRegisteredVehiclesResponseDto> resultMap = new ArrayList<>();
-	    MostRegisteredVehiclesResponseDto mostRegisteredVehiclesResponseDto;
+	    List<MostRegisteredVehiclesParkingResponseDto> resultMap = new ArrayList<>();
+	    MostRegisteredVehiclesParkingResponseDto mostRegisteredVehiclesResponseDto;
 	    
 	    for (Object[] result : results) {
-	    	mostRegisteredVehiclesResponseDto = new MostRegisteredVehiclesResponseDto();
+	    	mostRegisteredVehiclesResponseDto = new MostRegisteredVehiclesParkingResponseDto();
 	        Long id = ((Number) result[0]).longValue();
 	        Long amount = ((Number) result[1]).longValue();
 	        String parkingName = ((String) result[2]);

@@ -11,11 +11,10 @@ import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.jpa.entity.ParkingHisto
 public interface IParkingHistoryRepository extends JpaRepository<ParkingHistoryEntity, Long> {
 	
 	@Query(nativeQuery = true,
-			value = "SELECT ph.vehicle_id as vehicle_id, COUNT(ph.id) AS amount, pa.name parking_name, v.plate\r\n"
+			value = "SELECT ph.vehicle_id as vehicle_id, COUNT(ph.id) AS amount, v.plate\r\n"
 					+ "FROM parking_history ph\r\n"
-					+ "join parking pa on ph.parking_id=pa.id\r\n"
 					+ "join vehicle v on ph.vehicle_id=v.id\r\n"
-					+ "GROUP BY ph.vehicle_id, pa.name, v.plate\r\n"
+					+ "GROUP BY ph.vehicle_id, v.plate\r\n"
 					+ "ORDER BY amount DESC\r\n"
 					+ "LIMIT 10")
 	List<Object[]> mostRegisteredVehicles();

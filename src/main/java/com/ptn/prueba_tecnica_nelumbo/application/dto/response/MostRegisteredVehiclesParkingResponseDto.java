@@ -9,11 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MostRegisteredVehiclesResponseDto {
+public class MostRegisteredVehiclesParkingResponseDto {
 	
     private Long vehicleId;
     
     private Long amount;
+    
+    private String parkingName;
     
     private String plate;
 

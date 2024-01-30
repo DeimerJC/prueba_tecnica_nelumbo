@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesParkingResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ProfitsIndicatorsResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.VehicleResponseExtDto;
@@ -125,7 +126,7 @@ public class IndicatorsRestController {
     		content = @Content(mediaType = "application/json", schema = @Schema(ref = "#/components/schemas/Error"))),
     })
     @GetMapping("/most-registered-vehicles/{parkingId}")
-    public ResponseEntity<List<MostRegisteredVehiclesResponseDto>> mostRegisteredVehiclesByParking(@PathVariable Long parkingId) {
+    public ResponseEntity<List<MostRegisteredVehiclesParkingResponseDto>> mostRegisteredVehiclesByParking(@PathVariable Long parkingId) {
         return ResponseEntity.ok(iParkingHistoryHandler.mostRegisteredVehiclesByParking(parkingId));
     }
     

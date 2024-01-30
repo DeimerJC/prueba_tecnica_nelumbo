@@ -3,6 +3,7 @@ package com.ptn.prueba_tecnica_nelumbo.application.handler;
 import java.util.List;
 
 import com.ptn.prueba_tecnica_nelumbo.application.dto.request.ParkingHistoryRequestDto;
+import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesParkingResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.MostRegisteredVehiclesResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ParkingHistoryResponseDto;
 import com.ptn.prueba_tecnica_nelumbo.application.dto.response.ProfitsIndicatorsResponseDto;
@@ -29,6 +30,6 @@ public interface IParkingHistoryHandler {
 
 	List<MostRegisteredVehiclesResponseDto> mostRegisteredVehicles();
 
-	List<MostRegisteredVehiclesResponseDto> mostRegisteredVehiclesByParking(Long parkingId);   
+	List<MostRegisteredVehiclesParkingResponseDto> mostRegisteredVehiclesByParking(Long parkingId);   
 
 }
