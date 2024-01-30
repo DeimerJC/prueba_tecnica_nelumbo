@@ -5,7 +5,8 @@ public enum ExceptionResponse {
     NO_DATA_FOUND("No data found for the requested petition."),
     BAD_REQUEST("Invalid request, the request could not be interpreted."),
     CONFLICT("The request has a conflict with the server."),
-	DOMAIN("An internal error has occurred.");
+	DOMAIN("An internal error has occurred."),
+	BAD_GATEWAY("Bad Gateway.");
 
     private final String message;
 

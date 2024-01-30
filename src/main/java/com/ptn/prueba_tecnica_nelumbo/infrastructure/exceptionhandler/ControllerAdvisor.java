@@ -16,6 +16,7 @@ import com.ptn.prueba_tecnica_nelumbo.domain.exception.BadRequestException;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.ConflictException;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.DomainException;
 import com.ptn.prueba_tecnica_nelumbo.domain.exception.NoDataFoundException;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.exception.BadGatewayException;
 
 @ControllerAdvice
 public class ControllerAdvisor {
@@ -53,6 +54,14 @@ public class ControllerAdvisor {
     			.body(Collections.singletonMap(MESSAGE,
     					ignoredDomainException.getMessage() != null ? ignoredDomainException.getMessage() : ExceptionResponse.DOMAIN.getMessage()));
     }
+    
+    @ExceptionHandler(BadGatewayException.class)
+    public ResponseEntity<Map<String, String>> handleBadGatewayException(
+    		BadGatewayException ignoredBadGatewayException) {
+    	return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+    			.body(Collections.singletonMap(MESSAGE,
+    					ignoredBadGatewayException.getMessage() != null ? ignoredBadGatewayException.getMessage() : ExceptionResponse.BAD_GATEWAY.getMessage()));
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handlerExceptionResolve(MethodArgumentNotValidException ex) {
@@ -71,7 +80,7 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handlerHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        Map<String, String> errors = new HashMap<String, String>(); System.err.println("entro handlerHttpMessageNotReadableException");
+        Map<String, String> errors = new HashMap<String, String>();
 
         // Verificar si la excepción tiene detalles sobre el campo problemático
         if (ex.getCause() instanceof com.fasterxml.jackson.databind.exc.MismatchedInputException) {

@@ -7,6 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.openfeignclient.configuration.NaiveRetryer;
+import com.ptn.prueba_tecnica_nelumbo.infrastructure.out.openfeignclient.configuration.RetreiveMessageErrorDecoder;
+
+import feign.Retryer;
+import feign.codec.ErrorDecoder;
+
 @SpringBootApplication
 @EnableFeignClients
 public class PruebaTecnicaNelumboApplication {
@@ -18,6 +24,16 @@ public class PruebaTecnicaNelumboApplication {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+    public ErrorDecoder errorDecoder() {
+        return new RetreiveMessageErrorDecoder();
+    }
+	
+	@Bean 
+	public Retryer retryer() { 
+	    return new NaiveRetryer(); 
 	}
 
 }
